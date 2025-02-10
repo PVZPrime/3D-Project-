@@ -33,9 +33,14 @@ public class EnemyHP : MonoBehaviour
             healthbar.fillAmount = health / MaxHealth;
             if (health <= 0)
             {
+                DropItems(1);
                 Destroy(gameObject);
             }
             time = 0;
         }
+    }
+    public void DropItems(int items)
+    { 
+    
     }
 }
