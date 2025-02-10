@@ -12,6 +12,8 @@ public class EnemyHP : MonoBehaviour
     [SerializeField]
     float ImunityTime = 0.25f;
     Image healthbar;
+    public int ItemDropAmount;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -33,7 +35,7 @@ public class EnemyHP : MonoBehaviour
             healthbar.fillAmount = health / MaxHealth;
             if (health <= 0)
             {
-                DropItems(1);
+                DropItems(ItemDropAmount);
                 Destroy(gameObject);
             }
             time = 0;

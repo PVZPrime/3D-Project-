@@ -14,6 +14,7 @@ namespace StarterAssets
 		public bool sprint;
 		public bool shoot;
 		public bool interact;
+		public bool Climb;
 
 		[Header("Movement Settings")]
 		public bool analogMovement;
@@ -55,8 +56,16 @@ namespace StarterAssets
 		{
 			InteractInput(value.isPressed);
 		}
-#endif  
-		public void InteractInput(bool newInteractState)
+        public void OnClimb(InputValue value)
+        {
+            ClimbInput(value.isPressed);
+        }
+#endif
+        public void ClimbInput(bool newClimbState)
+        {
+            Climb = newClimbState;
+        }
+        public void InteractInput(bool newInteractState)
 		{
 			interact = newInteractState;
 		}
