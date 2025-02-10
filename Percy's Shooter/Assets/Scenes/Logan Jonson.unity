@@ -1119,7 +1119,7 @@ PrefabInstance:
     - target: {fileID: 7601064414229739678, guid: f98ed2d5f5498474593cf593e811959c,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.784
+      value: 1.029
       objectReference: {fileID: 0}
     - target: {fileID: 7601064414229739678, guid: f98ed2d5f5498474593cf593e811959c,
         type: 3}
@@ -1344,7 +1344,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.972549, g: 0.95686275, b: 0.92941177, a: 0}
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 1}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
