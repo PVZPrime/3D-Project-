@@ -33,7 +33,7 @@ namespace player
                     //Debug.Log(hit.collider.gameObject.name);
                     if (hit.collider.gameObject.tag == "Enemy")
                     {
-                        hit.collider.gameObject.GetComponent<EnemyHP>().TakeDamage(1);;
+                        hit.collider.gameObject.GetComponent<EnemyHP>().TakeDamage(1);
                     }
                 }
             }
