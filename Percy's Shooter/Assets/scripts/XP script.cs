@@ -13,13 +13,10 @@ namespace player
         public bool Level4;
         public bool Level5;
         public bool Level6;
-        // Start is called before the first frame update
         void Start()
         {
 
         }
-
-        // Update is called once per frame
         void Update()
         {
             if (XP >= MaxXP && !Level1)
@@ -50,6 +47,10 @@ namespace player
             {
                 XP = 100;
             }
+        }
+        public void GiveXP(int XPNum)
+        {
+            XP += XPNum;
         }
     }
 }
