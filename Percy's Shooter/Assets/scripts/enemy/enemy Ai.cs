@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
+//https://www.youtube.com/watch?v=UjkSFoLxesw
 namespace Enemy
 {
     public class enemyAi : MonoBehaviour
