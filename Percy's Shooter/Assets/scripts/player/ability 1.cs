@@ -3,24 +3,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-
+using UnityEngine.Windows;
 
 namespace player
 {
 #if ENABLE_INPUT_SYSTEM
     [RequireComponent(typeof(PlayerInput))]
 #endif
-    public class RaycastShoot : MonoBehaviour
+    public class ability1 : MonoBehaviour
     {
         private StarterAssetsInputs _input;
-
-        // Start is called before the first frame update
         void Start()
         {
             _input = GetComponent<StarterAssetsInputs>();
         }
 
-        // Update is called once per frame
         void Update()
         {
             RaycastHit hit;
