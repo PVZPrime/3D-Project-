@@ -775,7 +775,7 @@ MonoBehaviour:
   lootList:
   - {fileID: 11400000, guid: fbc2c928a0032d64b96798aa70ad4687, type: 2}
   - {fileID: 11400000, guid: cac66a62898fbf24b9642e2461eabfa1, type: 2}
-  DropAllInList: 1
+  DropAllInList: 0
 --- !u!1 &787644904
 GameObject:
   m_ObjectHideFlags: 0

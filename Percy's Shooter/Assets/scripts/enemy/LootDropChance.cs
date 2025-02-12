@@ -37,7 +37,6 @@ public class LootDropChance : MonoBehaviour
             if (randomNumber <= item.DropChance)
             {
                 possibleItems.Add(item);
-                //return possibleItems;
             }
         }
         if (possibleItems.Count > 0)
@@ -64,7 +63,6 @@ public class LootDropChance : MonoBehaviour
             List<Loot> droppedItems = GetDroppedItemAll();
             if (droppedItems != null && droppedItems.Count > 0)
             {
-                // Loop through each Loot item and instantiate its LootObject
                 foreach (Loot droppedItem in droppedItems)
                 {
                     GameObject lootGameObject = Instantiate(droppedItem.LootObject, spawnPosition, Quaternion.identity);
@@ -72,13 +70,5 @@ public class LootDropChance : MonoBehaviour
                 }
             }
         }
-        /*if (DropAllInList)
-        {
-            List<Loot> droppedItem = GetDroppedItemAll();
-            if(droppedItem != null)
-            {
-                GameObject lootGameObject = Instantiate(droppedItem.LootObject, spawnPosition, Quaternion.identity);
-            }
-        }*/
     }
 }
