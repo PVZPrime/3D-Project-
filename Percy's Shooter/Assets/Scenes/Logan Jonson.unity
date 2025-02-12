@@ -600,6 +600,7 @@ GameObject:
   - component: {fileID: 658231696}
   - component: {fileID: 658231695}
   - component: {fileID: 658231701}
+  - component: {fileID: 658231702}
   m_Layer: 0
   m_Name: Capsule
   m_TagString: Enemy
@@ -758,8 +759,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 1
   ImunityTime: 0.25
-  ItemDropAmount: 0
   experianceAmount: 10
+--- !u!114 &658231702
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 658231694}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52861ae7c20e0494ab7d3465e2fd7eeb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lootList:
+  - {fileID: 11400000, guid: fbc2c928a0032d64b96798aa70ad4687, type: 2}
+  - {fileID: 11400000, guid: cac66a62898fbf24b9642e2461eabfa1, type: 2}
+  DropAllInList: 0
 --- !u!1 &787644904
 GameObject:
   m_ObjectHideFlags: 0
@@ -1579,7 +1595,7 @@ MonoBehaviour:
   m_LookAt: {fileID: 0}
   m_Follow: {fileID: 7161303881823327247}
   m_Lens:
-    FieldOfView: 40
+    FieldOfView: 90
     OrthographicSize: 10
     NearClipPlane: 0.2
     FarClipPlane: 500
@@ -2113,8 +2129,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pushLayers:
     serializedVersion: 2
-    m_Bits: 0
-  canPush: 0
+    m_Bits: 1
+  canPush: 1
   strength: 1.1
 --- !u!114 &4716530625819608996
 MonoBehaviour:
@@ -2332,7 +2348,7 @@ Camera:
     height: 1
   near clip plane: 0.2
   far clip plane: 500
-  field of view: 40
+  field of view: 90
   orthographic: 0
   orthographic size: 10
   m_Depth: -1
