@@ -883,7 +883,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: cac66a62898fbf24b9642e2461eabfa1, type: 2}
   DropAllInList: 0
   DropSpecificAmount: 1
-  DropAttemptAmount: 10
+  DropAttemptAmount: 500
 --- !u!1 &787644904
 GameObject:
   m_ObjectHideFlags: 0
@@ -1558,7 +1558,7 @@ NavMeshObstacle:
   m_Extents: {x: 0.5, y: 0.5, z: 0.5}
   m_MoveThreshold: 0.1
   m_Carve: 1
-  m_CarveOnlyStationary: 1
+  m_CarveOnlyStationary: 0
   m_Center: {x: 0, y: 0, z: 0}
   m_TimeToStationary: 0.5
 --- !u!65 &1516364742
@@ -1641,7 +1641,7 @@ Transform:
   m_GameObject: {fileID: 1516364740}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 13.58, y: 2.5622, z: 58.58}
+  m_LocalPosition: {x: 13.58, y: 2.5622, z: 59.4}
   m_LocalScale: {x: 16.881645, y: 5.0844, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
