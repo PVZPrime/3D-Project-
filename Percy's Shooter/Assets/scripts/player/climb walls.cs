@@ -37,10 +37,8 @@ namespace player
             {
                 if (Physics.Raycast(cam.transform.position, cam.transform.forward, out var firstHit, one, LayerMask))
                 {
-                    Debug.Log("1");
                     if (Physics.Raycast(firstHit.point + (cam.transform.forward * playerRadius) + (Vector3.up * two * playerHeight), Vector3.down, out var secondHit, playerHeight))
                     {
-                        Debug.Log("2");
                         StartCoroutine(LerpVault(secondHit.point, three));
                     }
                 }
