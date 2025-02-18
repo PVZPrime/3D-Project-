@@ -13,22 +13,27 @@ namespace player
 #if ENABLE_INPUT_SYSTEM
     [RequireComponent(typeof(PlayerInput))]
 #endif
-    public class ability1 : MonoBehaviour
+    public class PlayerShoot : MonoBehaviour
     {
+        [Header("Bullet prefab")]
         public GameObject Bullet;
+        [Header("Bullet force")]
         public float ShootForce, UpwardForce;
+        [Header("Gun Stats")]
         public float TimeBetweenShooting, Spread, ReloadTime, TimeBetweenShots;
         public int MagSize, BulletsPerTap;
         int bulletsLeft, BulletsShot;
         bool Shooting, ReadyToShoot, Reloading;
         public bool AutoReload = true;
 
+        [Header("Referance Objects")]
         public Camera Cam;
         public Transform AttackPoint;
 
         public bool AllowInvoke = true;
         private StarterAssetsInputs _input;
 
+        [Header("Graphics")]
         public GameObject MuzzleFlash;
         public TextMeshProUGUI AmmoDisplay;
 
@@ -105,7 +110,7 @@ namespace player
                 AllowInvoke = false;
             }
             if(BulletsShot < BulletsPerTap && bulletsLeft > 0)
-                Invoke("ResetShot", TimeBetweenShots);
+                Invoke("Shoot", TimeBetweenShots);
         }
         private void ResetShot()
         {
