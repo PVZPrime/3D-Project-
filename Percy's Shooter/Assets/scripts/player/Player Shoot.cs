@@ -15,21 +15,22 @@ namespace player
 #endif
     public class PlayerShoot : MonoBehaviour
     {
-        [Header("Bullet prefab")]
+        [Header("Bullet settings")]
         public GameObject Bullet;
-        [Header("Bullet force")]
         public float ShootForce, UpwardForce;
         [Header("Gun Stats")]
-        public float TimeBetweenShooting, Spread, ReloadTime, TimeBetweenShots;
-        public int MagSize, BulletsPerTap;
+        public float TimeBetweenShooting;
+        public float Spread, ReloadTime, TimeBetweenShots;
+        public int MagSize, BulletsPerTap, Ability1Bullets;
         int bulletsLeft, BulletsShot;
-        bool Shooting, ReadyToShoot, Reloading;
+        bool Shooting, ReadyToShoot, Reloading, Ability1Active;
         public bool AutoReload = true;
 
         [Header("Referance Objects")]
         public Camera Cam;
         public Transform AttackPoint;
 
+        [Header("Debuging")]
         public bool AllowInvoke = true;
         private StarterAssetsInputs _input;
 
@@ -71,6 +72,13 @@ namespace player
 
                 Shoot();
             }
+            Ability1Active = _input.shoot;
+            if (ReadyToShoot && Shooting && !Reloading && bulletsLeft > 0)
+            {
+                BulletsShot = 0;
+
+                Ability1();
+            }
         }
         private void Shoot()
         {
@@ -111,6 +119,40 @@ namespace player
             }
             if(BulletsShot < BulletsPerTap && bulletsLeft > 0)
                 Invoke("Shoot", TimeBetweenShots);
+        }
+        private void Ability1()
+        {
+            ReadyToShoot = false;
+
+            Ray ray = Cam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
+            RaycastHit hit;
+
+            Vector3 targetPoint;
+            if (Physics.Raycast(ray, out hit)) targetPoint = hit.point;
+            else targetPoint = ray.GetPoint(75);
+
+            Vector3 directionWithoutSpread = targetPoint - AttackPoint.position;
+
+            float x = Random.Range(-Spread, Spread);
+            float y = Random.Range(-Spread, Spread);
+
+            Vector3 directionWithSpread = directionWithoutSpread + new Vector3(x, y, 0);
+
+            GameObject currentBullet = Instantiate(Bullet, AttackPoint.position, Quaternion.identity);
+
+            currentBullet.transform.forward = directionWithSpread.normalized;
+
+            currentBullet.GetComponent<Rigidbody>().AddForce(directionWithSpread.normalized * ShootForce, ForceMode.Impulse);
+            currentBullet.GetComponent<Rigidbody>().AddForce(Cam.transform.up * UpwardForce, ForceMode.Impulse);
+
+            if (MuzzleFlash != null)
+                Instantiate(MuzzleFlash, AttackPoint.position, Quaternion.identity);
+
+            bulletsLeft--;
+            BulletsShot++;
+
+            if (BulletsShot < Ability1Bullets && bulletsLeft > Ability1Bullets)
+                Invoke("Ability1", TimeBetweenShots);
         }
         private void ResetShot()
         {

@@ -70,9 +70,18 @@
                 },
                 {
                     "name": "Reload",
-                    "type": "Button",
+                    "type": "PassThrough",
                     "id": "949a1b10-d012-400b-a114-8f0b2b8181a9",
-                    "expectedControlType": "",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Ability 1",
+                    "type": "PassThrough",
+                    "id": "d642b735-fd0a-498a-953e-e6507fa49da6",
+                    "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -329,6 +338,17 @@
                     "processors": "",
                     "groups": ";KeyboardMouse",
                     "action": "Reload",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "fa82ab2a-82f7-4410-ad45-1aeba683ace6",
+                    "path": "<Keyboard>/1",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";KeyboardMouse",
+                    "action": "Ability 1",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
