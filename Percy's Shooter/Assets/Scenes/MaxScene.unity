@@ -584,6 +584,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: HandBuff
       objectReference: {fileID: 0}
+    - target: {fileID: 4236488732338503516, guid: 705739c8a83b48742a5019d453bdae19,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 2d3f2298d7dcdf74598529fccd32d19a, type: 2}
     - target: {fileID: 8950583390669616112, guid: 705739c8a83b48742a5019d453bdae19,
         type: 3}
       propertyPath: m_LocalScale.x
