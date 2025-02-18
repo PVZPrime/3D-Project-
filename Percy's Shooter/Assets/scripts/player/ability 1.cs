@@ -1,6 +1,7 @@
 using StarterAssets;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -20,12 +21,16 @@ namespace player
         public int MagSize, BulletsPerTap;
         int bulletsLeft, BulletsShot;
         bool Shooting, ReadyToShoot, Reloading;
+        public bool AutoReload = true;
 
         public Camera Cam;
         public Transform AttackPoint;
 
         public bool AllowInvoke = true;
         private StarterAssetsInputs _input;
+
+        public GameObject MuzzleFlash;
+        public TextMeshProUGUI AmmoDisplay;
 
         public void Awake()
         {
@@ -40,11 +45,20 @@ namespace player
         void Update()
         {
             MyInput();
-            //if (_input.shoot)
+
+            if (AmmoDisplay != null)
+                AmmoDisplay.SetText(bulletsLeft / BulletsPerTap + " / " + MagSize / BulletsPerTap);
 
         }
         private void MyInput()
         {
+            if(_input.Reload /*&& bulletsLeft < MagSize*/ && !Reloading) Reload();
+            if (AutoReload)
+            {
+                if (ReadyToShoot && Shooting && !Reloading && bulletsLeft <= 0) Reload();
+            }
+
+
             Shooting = _input.shoot;
             if (ReadyToShoot && Shooting && !Reloading && bulletsLeft > 0)
             {
@@ -78,9 +92,35 @@ namespace player
             currentBullet.GetComponent<Rigidbody>().AddForce(directionWithSpread.normalized * ShootForce, ForceMode.Impulse);
             currentBullet.GetComponent<Rigidbody>().AddForce(Cam.transform.up * UpwardForce, ForceMode.Impulse);
 
+            if (MuzzleFlash != null)
+                Instantiate(MuzzleFlash, AttackPoint.position, Quaternion.identity);
+
             bulletsLeft--;
             BulletsShot++;
 
+            if(AllowInvoke)
+            {
+                //Invoke("ResetShot", 3f); calls function after 3 seconds
+                Invoke("ResetShot", TimeBetweenShooting);
+                AllowInvoke = false;
+            }
+            if(BulletsShot < BulletsPerTap && bulletsLeft > 0)
+                Invoke("ResetShot", TimeBetweenShots);
+        }
+        private void ResetShot()
+        {
+            ReadyToShoot = true;
+            AllowInvoke = true;
+        }
+        private void Reload()
+        {
+            Reloading = true;
+            Invoke("ReloadFinished", ReloadTime);
+        }
+        private void ReloadFinished()
+        {
+            bulletsLeft = MagSize;
+            Reloading = false;
         }
     }
 }

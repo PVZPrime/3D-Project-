@@ -13,7 +13,8 @@ namespace StarterAssets
 		public bool jump;
 		public bool sprint;
 		public bool shoot;
-		public bool interact;
+        public bool Reload;
+        public bool interact;
 		public bool Climb;
 
 		[Header("Movement Settings")]
@@ -52,7 +53,12 @@ namespace StarterAssets
             ShootInput(value.isPressed);
         }
 
-		public void OnInteract(InputValue value)
+        public void OnReload(InputValue value)
+        {
+            ReloadInput(value.isPressed);
+        }
+
+        public void OnInteract(InputValue value)
 		{
 			InteractInput(value.isPressed);
 		}
@@ -73,6 +79,10 @@ namespace StarterAssets
 		public void ShootInput(bool newShootState)
         {
             shoot = newShootState;
+        }
+        public void ReloadInput(bool newReloadState)
+        {
+            Reload = newReloadState;
         }
 
         public void MoveInput(Vector2 newMoveDirection)
