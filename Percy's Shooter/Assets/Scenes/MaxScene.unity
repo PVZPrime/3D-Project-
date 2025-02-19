@@ -509,6 +509,11 @@ PrefabInstance:
       propertyPath: SprintSpeed
       value: 15
       objectReference: {fileID: 0}
+    - target: {fileID: 453084650579209848, guid: 035bf1ba97d19214580cfe6f5a29fdc3,
+        type: 3}
+      propertyPath: RotationSpeed
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 937451010987979973, guid: 035bf1ba97d19214580cfe6f5a29fdc3,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -696,7 +701,7 @@ PrefabInstance:
     - target: {fileID: 2986652311375886281, guid: 798d81171d8363f4b94bb0ab80c219af,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 24.110588
+      value: 24.11059
       objectReference: {fileID: 0}
     - target: {fileID: 2986652311375886281, guid: 798d81171d8363f4b94bb0ab80c219af,
         type: 3}
@@ -733,13 +738,24 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4610540717304774685, guid: 798d81171d8363f4b94bb0ab80c219af,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -58.362
+      objectReference: {fileID: 0}
+    - target: {fileID: 4610540717304774685, guid: 798d81171d8363f4b94bb0ab80c219af,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -22.109
+      objectReference: {fileID: 0}
     - target: {fileID: 4615692446058686161, guid: 798d81171d8363f4b94bb0ab80c219af,
         type: 3}
       propertyPath: m_Name
       value: Hands (Camera Root)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 7874565895951140136, guid: 798d81171d8363f4b94bb0ab80c219af, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 798d81171d8363f4b94bb0ab80c219af, type: 3}
