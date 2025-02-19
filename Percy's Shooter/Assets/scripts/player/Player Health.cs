@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 
@@ -8,34 +10,40 @@ namespace player
 {
     public class PlayerHealth : MonoBehaviour
     {
-        [SerializeField]
-        float health = 2;
+        public float health = 2;
         float MaxHealth;
         float time;
-        [SerializeField]
-        float ImunityTime = 0.25f;
+        float timer;
+        public float ImunityTime = 0.25f;
         public Image healthbar;
+        public float RegenAmount;
+        public float RegenDelay;
         // Start is called before the first frame update
         void Start()
         {
             MaxHealth = health;
-            //healthbar.fillAmount = health / MaxHealth;
+            if(healthbar != null ) healthbar.fillAmount = health / MaxHealth;
         }
 
         // Update is called once per frame
         void Update()
         {
             time += Time.deltaTime;
+            timer = Time.deltaTime;
+            if(timer >= RegenDelay)
+            {
+                health += RegenAmount;
+            }
         }
         public void TakeDamage(int damage)
         {
             if (time >= ImunityTime)
             {
                 health -= damage;
-                //healthbar.fillAmount = health / MaxHealth;
+                if (healthbar != null) healthbar.fillAmount = health / MaxHealth;
                 if (health <= 0)
                 {
-
+                    
                 }
                 time = 0;
             }
