@@ -76,21 +76,18 @@ namespace player
             if (ReadyToShoot && Shooting && !Reloading && bulletsLeft > 0)
             {
                 BulletsShot = 0;
-                Debug.Log("1");
                 Shoot();
             }
             Ability1Active = _input.Ability1;
             if (ReadyToActivate && Ability1Active && !Reloading && bulletsLeft > Ability1Bullets)
             {
                 BulletsShot = 0;
-                Debug.Log("1a");
                 Ability1();
             }
         }
         private void Shoot()
         {
             ReadyToShoot = false;
-            Debug.Log("2");
             Ray ray = Cam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
             RaycastHit hit;
 
@@ -127,19 +124,16 @@ namespace player
 
             if (AllowInvoke)
             {
-                Debug.Log("3");
                 //Invoke("ResetShot", 3f); calls function after 3 seconds
                 Invoke("ResetShot", TimeBetweenShooting);
                 AllowInvoke = false;
             }
             if (BulletsShot < BulletsPerTap && bulletsLeft > 0)
                 Invoke("Shoot", TimeBetweenShots);
-            Debug.Log("4");
         }
         private void Ability1()
         {
             ReadyToActivate = false;
-            Debug.Log("2a");
             Ray ray = Cam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
             RaycastHit hit;
 
@@ -174,7 +168,6 @@ namespace player
 
             if (AllowInvokeAbility)
             {
-                Debug.Log("3a");
                 //Invoke("ResetShot", 3f); calls function after 3 seconds
                 Invoke("ResetAbility", TimeBetweenAbilities);
                 AllowInvokeAbility = false;
@@ -189,7 +182,6 @@ namespace player
         }
         private void ResetShot()
         {
-            Debug.Log("5");
             ReadyToShoot = true;
             AllowInvoke = true;
         }

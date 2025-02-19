@@ -17,6 +17,7 @@ namespace StarterAssets
         public bool interact;
 		public bool Climb;
 		public bool Ability1;
+		public bool Ability2;
 
 		[Header("Movement Settings")]
 		public bool analogMovement;
@@ -71,10 +72,18 @@ namespace StarterAssets
         {
             Ability1Input(value.isPressed);
         }
+        public void OnAbility2(InputValue value)
+        {
+            Ability2Input(value.isPressed);
+        }
 #endif
         public void Ability1Input(bool newAbility1State)
         {
             Ability1 = newAbility1State;
+        }
+        public void Ability2Input(bool newAbility2State)
+        {
+            Ability2 = newAbility2State;
         }
         public void ClimbInput(bool newClimbState)
         {
