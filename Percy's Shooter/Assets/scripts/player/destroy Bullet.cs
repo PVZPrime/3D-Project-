@@ -13,12 +13,15 @@ namespace player
             timer += Time.deltaTime;
             if (timer >= timeToDestroy)
             {
-                Destroy(gameObject);
+                //Destroy(gameObject);
+                gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
+                gameObject.SetActive(false);
+                timer = 0;
             }
         }
         private void OnTriggerEnter(Collider coll)
         {
-            if (coll != CompareTag("Bullet")) Destroy(gameObject);
+            if (coll != CompareTag("Bullet")) /*Destroy(gameObject);*/gameObject.SetActive(false);
         }
     }
 }

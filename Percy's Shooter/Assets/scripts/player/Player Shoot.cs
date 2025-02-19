@@ -16,15 +16,20 @@ namespace player
     public class PlayerShoot : MonoBehaviour
     {
         [Header("Bullet settings")]
-        public GameObject Bullet;
-        public float ShootForce, UpwardForce;
+        public float ShootForce;
+        public float UpwardForce, AbilityForce;
         [Header("Gun Stats")]
         public float TimeBetweenShooting;
         public float Spread, ReloadTime, TimeBetweenShots;
-        public int MagSize, BulletsPerTap, Ability1Bullets;
+        public int MagSize, BulletsPerTap;
         int bulletsLeft, BulletsShot;
-        bool Shooting, ReadyToShoot, Reloading, Ability1Active;
+        bool Shooting, ReadyToShoot, Reloading;
         public bool AutoReload = true;
+
+        [Header("Ability Stats")]
+        public float TimeBetweenAbilities;
+        public int Ability1Bullets;
+        bool Ability1Active, ReadyToActivate;
 
         [Header("Referance Objects")]
         public Camera Cam;
@@ -32,6 +37,7 @@ namespace player
 
         [Header("Debuging")]
         public bool AllowInvoke = true;
+        public bool AllowInvokeAbility = true;
         private StarterAssetsInputs _input;
 
         [Header("Graphics")]
@@ -42,6 +48,7 @@ namespace player
         {
             bulletsLeft = MagSize;
             ReadyToShoot = true;
+            ReadyToActivate = true;
         }
         void Start()
         {
@@ -58,7 +65,7 @@ namespace player
         }
         private void MyInput()
         {
-            if(_input.Reload /*&& bulletsLeft < MagSize*/ && !Reloading) Reload();
+            if (_input.Reload /*&& bulletsLeft < MagSize*/ && !Reloading) Reload();
             if (AutoReload)
             {
                 if (ReadyToShoot && Shooting && !Reloading && bulletsLeft <= 0) Reload();
@@ -69,21 +76,21 @@ namespace player
             if (ReadyToShoot && Shooting && !Reloading && bulletsLeft > 0)
             {
                 BulletsShot = 0;
-
+                Debug.Log("1");
                 Shoot();
             }
-            Ability1Active = _input.shoot;
-            if (ReadyToShoot && Shooting && !Reloading && bulletsLeft > 0)
+            Ability1Active = _input.Ability1;
+            if (ReadyToActivate && Ability1Active && !Reloading && bulletsLeft > Ability1Bullets)
             {
                 BulletsShot = 0;
-
+                Debug.Log("1a");
                 Ability1();
             }
         }
         private void Shoot()
         {
             ReadyToShoot = false;
-
+            Debug.Log("2");
             Ray ray = Cam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
             RaycastHit hit;
 
@@ -98,8 +105,15 @@ namespace player
 
             Vector3 directionWithSpread = directionWithoutSpread + new Vector3(x, y, 0);
 
-            GameObject currentBullet = Instantiate(Bullet, AttackPoint.position, Quaternion.identity);
+            GameObject currentBullet = ObjectPooling.SharedInstance.GetPooledObject();
+            if (currentBullet != null)
+            {
+                currentBullet.transform.position = AttackPoint.transform.position;
+                currentBullet.transform.rotation = AttackPoint.transform.rotation;
+                currentBullet.SetActive(true);
 
+                currentBullet.transform.forward = directionWithSpread.normalized;
+            }
             currentBullet.transform.forward = directionWithSpread.normalized;
 
             currentBullet.GetComponent<Rigidbody>().AddForce(directionWithSpread.normalized * ShootForce, ForceMode.Impulse);
@@ -111,19 +125,21 @@ namespace player
             bulletsLeft--;
             BulletsShot++;
 
-            if(AllowInvoke)
+            if (AllowInvoke)
             {
+                Debug.Log("3");
                 //Invoke("ResetShot", 3f); calls function after 3 seconds
                 Invoke("ResetShot", TimeBetweenShooting);
                 AllowInvoke = false;
             }
-            if(BulletsShot < BulletsPerTap && bulletsLeft > 0)
+            if (BulletsShot < BulletsPerTap && bulletsLeft > 0)
                 Invoke("Shoot", TimeBetweenShots);
+            Debug.Log("4");
         }
         private void Ability1()
         {
-            ReadyToShoot = false;
-
+            ReadyToActivate = false;
+            Debug.Log("2a");
             Ray ray = Cam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
             RaycastHit hit;
 
@@ -138,11 +154,16 @@ namespace player
 
             Vector3 directionWithSpread = directionWithoutSpread + new Vector3(x, y, 0);
 
-            GameObject currentBullet = Instantiate(Bullet, AttackPoint.position, Quaternion.identity);
+            GameObject currentBullet = ObjectPooling.SharedInstance.GetPooledObject();
+            if (currentBullet != null)
+            {
+                currentBullet.transform.position = AttackPoint.transform.position;
+                currentBullet.transform.rotation = AttackPoint.transform.rotation;
+                currentBullet.SetActive(true);
 
-            currentBullet.transform.forward = directionWithSpread.normalized;
-
-            currentBullet.GetComponent<Rigidbody>().AddForce(directionWithSpread.normalized * ShootForce, ForceMode.Impulse);
+                currentBullet.transform.forward = directionWithSpread.normalized;
+            }
+            currentBullet.GetComponent<Rigidbody>().AddForce(directionWithSpread.normalized * AbilityForce, ForceMode.Impulse);
             currentBullet.GetComponent<Rigidbody>().AddForce(Cam.transform.up * UpwardForce, ForceMode.Impulse);
 
             if (MuzzleFlash != null)
@@ -151,11 +172,24 @@ namespace player
             bulletsLeft--;
             BulletsShot++;
 
-            if (BulletsShot < Ability1Bullets && bulletsLeft > Ability1Bullets)
+            if (AllowInvokeAbility)
+            {
+                Debug.Log("3a");
+                //Invoke("ResetShot", 3f); calls function after 3 seconds
+                Invoke("ResetAbility", TimeBetweenAbilities);
+                AllowInvokeAbility = false;
+            }
+            if (BulletsShot < Ability1Bullets && bulletsLeft > 0)
                 Invoke("Ability1", TimeBetweenShots);
+        }
+        private void ResetAbility()
+        {
+            ReadyToActivate = true;
+            AllowInvokeAbility = true;
         }
         private void ResetShot()
         {
+            Debug.Log("5");
             ReadyToShoot = true;
             AllowInvoke = true;
         }
