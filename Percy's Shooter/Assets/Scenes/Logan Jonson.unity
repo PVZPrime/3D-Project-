@@ -737,7 +737,7 @@ GameObject:
   - component: {fileID: 658231695}
   - component: {fileID: 658231701}
   - component: {fileID: 658231702}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Capsule
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -2422,7 +2422,7 @@ GameObject:
   - component: {fileID: 1213726813457086793}
   - component: {fileID: 1213726813457086792}
   - component: {fileID: 1213726813457086791}
-  m_Layer: 8
+  m_Layer: 3
   m_Name: Capsule
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2987,6 +2987,8 @@ GameObject:
   - component: {fileID: 4716530625819609000}
   - component: {fileID: 4716530625819608999}
   - component: {fileID: 4716530625819609001}
+  - component: {fileID: 4716530625819609002}
+  - component: {fileID: 4716530625819609003}
   m_Layer: 3
   m_Name: PlayerCapsule
   m_TagString: Player
@@ -3382,9 +3384,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8dc3f3b8cb7030049ba20cc896bddbdc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ShootForce: 10
+  ShootForce: 300
   UpwardForce: 0
-  AbilityForce: 10
+  AbilityForce: 300
   TimeBetweenShooting: 0.25
   Spread: 2
   ReloadTime: 1.5
@@ -3412,12 +3414,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 242f7f09dc8933d4c86a2cd061c338de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayerSpeedBuffed: 0
-  PlayerSprintSpeedBuffed: 0
-  PlayerRegenAmountBuffed: 0
-  Cooldown: 10
-  Length: 0
-  time: 0
+  PlayerSpeedBuffed: 50
+  PlayerSprintSpeedBuffed: 100
+  PlayerRegenAmountBuffed: 5
+  Cooldown: 30
 --- !u!114 &4716530625819609001
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3435,6 +3435,35 @@ MonoBehaviour:
   healthbar: {fileID: 0}
   RegenAmount: 3
   RegenDelay: 1
+--- !u!114 &4716530625819609002
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3284272868485066067}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b800168d76bb0d541a3b72f56d36c632, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  test: 1
+  whatIsPlayer:
+    serializedVersion: 2
+    m_Bits: 256
+  Sphere: 0
+--- !u!114 &4716530625819609003
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3284272868485066067}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d1a250a1210fc24f9f5cf6e2746c299, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4931101699869973676
 GameObject:
   m_ObjectHideFlags: 0
