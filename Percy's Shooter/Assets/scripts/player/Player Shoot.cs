@@ -9,7 +9,7 @@ using UnityEngine.Windows;
 
 namespace player
 {
-    //https://www.youtube.com/watch?v=wZ2UUOC17AY 5:50
+    //https://www.youtube.com/watch?v=wZ2UUOC17AY
 #if ENABLE_INPUT_SYSTEM
     [RequireComponent(typeof(PlayerInput))]
 #endif
@@ -22,14 +22,19 @@ namespace player
         public float TimeBetweenShooting;
         public float Spread, ReloadTime, TimeBetweenShots;
         public int MagSize, BulletsPerTap;
-        int bulletsLeft, BulletsShot;
-        bool Shooting, ReadyToShoot, Reloading;
+        public int bulletsLeft  {  get; set; }
+        public int BulletsAvalible;
+        int BulletsShot;
+        bool Shooting, ReadyToShoot; 
+        public bool Reloading {  get; set; }
         public bool AutoReload = true;
 
         [Header("Ability Stats")]
         public float TimeBetweenAbilities;
+        public float saveCoolDown;
         public int Ability1Bullets;
-        bool Ability1Active, ReadyToActivate;
+        bool Ability1Active, ReadyToActivate; 
+        public bool SaveCoolDownActive {  get; set; }
 
         [Header("Referance Objects")]
         public Camera Cam;
@@ -52,15 +57,19 @@ namespace player
         }
         void Start()
         {
+            saveCoolDown = TimeBetweenAbilities;
             _input = GetComponent<StarterAssetsInputs>();
         }
 
         void Update()
         {
             MyInput();
-
             if (AmmoDisplay != null)
                 AmmoDisplay.SetText(bulletsLeft / BulletsPerTap + " / " + MagSize / BulletsPerTap);
+            if(SaveCoolDownActive)
+            {
+                saveCoolDown -= Time.deltaTime;
+            }
 
         }
         private void MyInput()
@@ -168,15 +177,21 @@ namespace player
 
             if (AllowInvokeAbility)
             {
-                //Invoke("ResetShot", 3f); calls function after 3 seconds
-                Invoke("ResetAbility", TimeBetweenAbilities);
-                AllowInvokeAbility = false;
+                if (saveCoolDown == TimeBetweenAbilities)
+                {
+                    //Invoke("ResetShot", 3f); calls function after 3 seconds
+                    Invoke("ResetAbility", TimeBetweenAbilities);
+                    AllowInvokeAbility = false;
+                    SaveCoolDownActive = true;
+                }
             }
             if (BulletsShot < Ability1Bullets && bulletsLeft > 0)
                 Invoke("Ability1", TimeBetweenShots);
         }
         private void ResetAbility()
         {
+            SaveCoolDownActive = false;
+            saveCoolDown = TimeBetweenAbilities;
             ReadyToActivate = true;
             AllowInvokeAbility = true;
         }
@@ -188,11 +203,20 @@ namespace player
         private void Reload()
         {
             Reloading = true;
-            Invoke("ReloadFinished", ReloadTime);
+            if(Reloading) Invoke("ReloadFinished", ReloadTime);
         }
         private void ReloadFinished()
         {
-            bulletsLeft = MagSize;
+            if (BulletsAvalible >= MagSize)
+            {
+                bulletsLeft = MagSize;
+                BulletsAvalible -= MagSize;
+            } else
+            {
+                //get the billets left then only add an amout that will make it equal to at max MagSize
+                bulletsLeft = BulletsAvalible;
+                BulletsAvalible = 0;
+            }
             Reloading = false;
         }
     }

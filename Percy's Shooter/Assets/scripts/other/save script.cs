@@ -2,14 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
+using player;
 
 public class SaveScript : MonoBehaviour
 {
     string password = "1234567890";
     CharacterController CC;
+    PlayerShoot PS;
+    PlayerHealth PH;
+    ability2 A2;
     void Start()
     {
         CC = GetComponent<CharacterController>();
+        PS = GetComponent<PlayerShoot>();
+        PH = GetComponent<PlayerHealth>();
+        A2 = GetComponent<ability2>();
     }
 
     void Update()
@@ -27,10 +34,17 @@ public class SaveScript : MonoBehaviour
     {
         //string result = EncryptDecryptData("a");
         //Debug.Log(result);
-        SaveData myData = new SaveData();
+        PlayerSaveData myData = new PlayerSaveData();
         myData.x = transform.position.x;
         myData.y = transform.position.y;
         myData.z = transform.position.z;
+        myData.health = PH.health;
+        myData.Ab1Timer = PS.saveCoolDown;
+        myData.Ammo = PS.bulletsLeft;
+        myData.Ab2Timer = A2.time;
+        myData.Ab2TimeLeft = A2.Length;
+        myData.Ab1TimerActive = PS.SaveCoolDownActive;
+        myData.PSReload = PS.Reloading;
         string myDataString = JsonUtility.ToJson(myData);
         myDataString = EncryptDecryptData(myDataString);
         //Debug.Log(myDataString);
@@ -45,14 +59,21 @@ public class SaveScript : MonoBehaviour
         {
             string jsonData = File.ReadAllText(file);
             jsonData = EncryptDecryptData(jsonData);
-            SaveData myData = JsonUtility.FromJson<SaveData>(jsonData);
+            PlayerSaveData myData = JsonUtility.FromJson<PlayerSaveData>(jsonData);
             CC.enabled = false;
             transform.position = new Vector3(myData.x, myData.y, myData.z);
             CC.enabled = true;
+            PH.health = myData.health;
+            PS.saveCoolDown = myData.Ab1Timer;
+            PS.bulletsLeft = myData.Ammo;
+            A2.time = myData.Ab2Timer;
+            A2.Length = myData.Ab2TimeLeft;
+            PS.SaveCoolDownActive = myData.Ab1TimerActive;
+            PS.Reloading = myData.PSReload;
 
-                //string myData = File.ReadAllText(file);
-                //myData = EncryptDecryptData(myData);
-                ////Debug.Log(myData);
+            //string myData = File.ReadAllText(file);
+            //myData = EncryptDecryptData(myData);
+            ////Debug.Log(myData);
         }
     }
     public string EncryptDecryptData(string data)
@@ -67,9 +88,16 @@ public class SaveScript : MonoBehaviour
 }
 
 [System.Serializable]
-public class SaveData
+public class PlayerSaveData
 {
     public float x;
     public float y;
     public float z;
+    public int Ammo;
+    public float health;
+    public float Ab1Timer;
+    public float Ab2Timer;
+    public float Ab2TimeLeft;
+    public bool Ab1TimerActive;
+    public bool PSReload;
 }
