@@ -3394,8 +3394,10 @@ MonoBehaviour:
   TimeBetweenShots: 0
   MagSize: 160
   BulletsPerTap: 10
+  BulletsAvalible: 0
   AutoReload: 1
   TimeBetweenAbilities: 25
+  saveCoolDown: 0
   Ability1Bullets: 50
   Cam: {fileID: 7852215993289118803}
   AttackPoint: {fileID: 184451563}
@@ -3431,7 +3433,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eadd8be361eef974b8affaaf8362c9db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 2
+  health: 10
   ImunityTime: 0.25
   healthbar: {fileID: 0}
   RegenAmount: 3
@@ -3454,6 +3456,7 @@ MonoBehaviour:
     m_Bits: 256
   Sphere: 0
   SC: {fileID: 0}
+  Enemy: []
 --- !u!114 &4716530625819609003
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -15,11 +15,12 @@ namespace Enemy
         [SerializeField]
         float ImunityTime = 0.25f;
         Image healthbar;
-        GameObject player;
+        //GameObject player;
         public int experianceAmount;
+        public bool EnemyDead;
         void Start()
         {
-            player = GameObject.FindGameObjectWithTag("Player");
+            //player = GameObject.FindGameObjectWithTag("Player");
             MaxHealth = health;
             //healthbar = GetComponentsInChildren<Image>()[1];
             //healthbar.fillAmount = health / MaxHealth;
@@ -38,10 +39,11 @@ namespace Enemy
                 //healthbar.fillAmount = health / MaxHealth;
                 if (health <= 0)
                 {
-                    player.GetComponent<XpScript>().GiveXP(experianceAmount);
+                    //player.GetComponent<XpScript>().GiveXP(experianceAmount);
                     GetComponent<LootDropChance>().InstantiateLoot(transform.position);
                     time = 0;
-                    Destroy(gameObject);
+                    gameObject.SetActive(false);
+                    EnemyDead = true;
                 }
                 time = 0;
             }

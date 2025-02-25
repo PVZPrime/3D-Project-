@@ -9,7 +9,7 @@ using UnityEngine.Windows;
 
 namespace player
 {
-    //https://www.youtube.com/watch?v=wZ2UUOC17AY 5:50
+    //https://www.youtube.com/watch?v=wZ2UUOC17AY
 #if ENABLE_INPUT_SYSTEM
     [RequireComponent(typeof(PlayerInput))]
 #endif
@@ -23,6 +23,7 @@ namespace player
         public float Spread, ReloadTime, TimeBetweenShots;
         public int MagSize, BulletsPerTap;
         public int bulletsLeft  {  get; set; }
+        public int BulletsAvalible;
         int BulletsShot;
         bool Shooting, ReadyToShoot; 
         public bool Reloading {  get; set; }
@@ -206,7 +207,16 @@ namespace player
         }
         private void ReloadFinished()
         {
-            bulletsLeft = MagSize;
+            if (BulletsAvalible >= MagSize)
+            {
+                bulletsLeft = MagSize;
+                BulletsAvalible -= MagSize;
+            } else
+            {
+                //get the billets left then only add an amout that will make it equal to at max MagSize
+                bulletsLeft = BulletsAvalible;
+                BulletsAvalible = 0;
+            }
             Reloading = false;
         }
     }

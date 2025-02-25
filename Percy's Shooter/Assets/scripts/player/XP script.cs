@@ -5,7 +5,7 @@ namespace player
 {
     public class XpScript : MonoBehaviour
     {
-        public int XP;
+        public int XP {  get; set; }
         public int MaxXP = 100;
         public bool Level1;
         public bool Level2;
