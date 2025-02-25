@@ -24,9 +24,9 @@ namespace player
         private FirstPersonController FPC;
         bool AbilityActive;
         public float Cooldown;
-        public float Length;
-        float BaseLength;
-        public float time;
+        float Length;
+        float time;
+        bool abilityActivated;
         // Start is called before the first frame update
         void Start()
         {
@@ -37,18 +37,21 @@ namespace player
             BasePlayerSprintSpeed = FPC.SprintSpeed;
             BasePlayerRegenAmount = PlayerHealth.RegenAmount;
             Length = Cooldown / 2;
-            BaseLength = Cooldown / 2;
             time = Cooldown;
         }
 
         // Update is called once per frame
         void Update()
         {
-            AbilityActive = _input.Ability2;
-            if(_input.Ability2 && time >= 0)
+            if (abilityActivated)
             {
                 time -= Time.deltaTime;
                 Length -= Time.deltaTime;
+            }
+            AbilityActive = _input.Ability2;
+            if(_input.Ability2 && time >= 0)
+            {
+                abilityActivated = true;
                 if (Length > 0)
                 {
                     FPC.MoveSpeed = PlayerSpeedBuffed;
@@ -59,13 +62,14 @@ namespace player
             else if(time <= 0)
             {
                 time = Cooldown;
-                Length = BaseLength;
+                Length = Cooldown / 2;
+                abilityActivated = false;
             }
                 if (Length <= 0)
                 {
-                    BasePlayerSpeed = FPC.MoveSpeed;
-                    BasePlayerSprintSpeed = FPC.SprintSpeed;
-                    BasePlayerRegenAmount = PlayerHealth.RegenAmount;
+                    FPC.MoveSpeed = BasePlayerSpeed;
+                    FPC.SprintSpeed = BasePlayerSprintSpeed;
+                    PlayerHealth.RegenAmount = BasePlayerRegenAmount;
                 }
         }
     }
