@@ -2989,6 +2989,7 @@ GameObject:
   - component: {fileID: 4716530625819609001}
   - component: {fileID: 4716530625819609002}
   - component: {fileID: 4716530625819609003}
+  - component: {fileID: 4716530625819609004}
   m_Layer: 3
   m_Name: PlayerCapsule
   m_TagString: Player
@@ -3452,6 +3453,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   Sphere: 0
+  SC: {fileID: 0}
 --- !u!114 &4716530625819609003
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3464,6 +3466,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d1a250a1210fc24f9f5cf6e2746c299, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!135 &4716530625819609004
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3284272868485066067}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 1
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &4931101699869973676
 GameObject:
   m_ObjectHideFlags: 0

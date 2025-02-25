@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace player
 {
@@ -10,9 +11,11 @@ namespace player
         public LayerMask whatIsPlayer;
         public bool Sphere;
         public SphereCollider SC;
+        public List<GameObject> Enemy;
         // Start is called before the first frame update
         void Start()
         {
+            Enemy = new List<GameObject>();
             SC = GetComponent<SphereCollider>();
         }
 
@@ -21,13 +24,18 @@ namespace player
         {
             SC.radius = test;
             Sphere = Physics.CheckSphere(transform.position, test, whatIsPlayer);
-            if (Sphere & Input.GetKeyDown(KeyCode.Alpha3))
+            if (Input.GetKeyDown(KeyCode.V))
             {
-                OnTriggerStay(SC);
+                OnStay(SC);
             }
         }
-        private void OnTriggerStay(Collider other)
+        public void OnStay(Collider Coll)
         {
+                if(Coll.CompareTag("Enemy"))
+                {
+                    Enemy.Add(Coll.gameObject);
+                    Debug.Log(Enemy.Count);
+                }
             //change this to a independent thing
             //set enemy move speed to a set amount
             //wait

@@ -12,8 +12,10 @@ namespace Krearthur.Utils
             if (go.scene.rootCount == 0) return true;
             PrefabInstanceStatus status = PrefabUtility.GetPrefabInstanceStatus(go);
 
+#pragma warning disable CS0618 // Type or member is obsolete
             return status == PrefabInstanceStatus.Connected
                 || status == PrefabInstanceStatus.Disconnected;
+#pragma warning restore CS0618 // Type or member is obsolete
         }
 
         /// <summary>

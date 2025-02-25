@@ -24,8 +24,8 @@ namespace player
         private FirstPersonController FPC;
         bool AbilityActive;
         public float Cooldown;
-        float Length;
-        float time;
+        public float Length { get; set; }
+        public float time { get; set; }
         bool abilityActivated;
         // Start is called before the first frame update
         void Start()
