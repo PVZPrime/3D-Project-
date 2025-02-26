@@ -10,6 +10,7 @@ namespace StarterAssets
 		[Header("Character Input Values")]
 		public Vector2 move;
 		public Vector2 look;
+		public bool crouch;
 		public bool jump;
 		public bool sprint;
 		public bool shoot;
@@ -76,10 +77,18 @@ namespace StarterAssets
         {
             Ability2Input(value.isPressed);
         }
+        public void OnCrouch(InputValue value)
+        {
+            CrouchInput(value.isPressed);
+        }
 #endif
         public void Ability1Input(bool newAbility1State)
         {
             Ability1 = newAbility1State;
+        }
+        public void CrouchInput(bool newcrouchState)
+        {
+            crouch = newcrouchState;
         }
         public void Ability2Input(bool newAbility2State)
         {

@@ -1606,6 +1606,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   move: {x: 0, y: 0}
   look: {x: 0, y: 0}
+  crouch: 0
   jump: 0
   sprint: 0
   shoot: 0
@@ -1629,17 +1630,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63588950335c42d49a3bf5fe9acdadbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 70
+  walkSpeed: 7
+  sprintSpeed: 10
   GroundDrag: 5
+  AirDrag: 2
   jumpForce: 12
   jumpCooldown: 0.25
   airMultiplier: 0.4
-  playerHeight: 2
+  crouchSpeed: 3.5
+  crouchYScale: 0.5
+  playerHeight: 1.5
   whatIsGround:
     serializedVersion: 2
     m_Bits: 128
-  maxGroudTime: 0
+  maxGroudTime: 1
   orientation: {fileID: 136543125}
+  state: 0
 --- !u!1 &1040535875
 GameObject:
   m_ObjectHideFlags: 0
@@ -3323,6 +3329,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   move: {x: 0, y: 0}
   look: {x: 0, y: 0}
+  crouch: 0
   jump: 0
   sprint: 0
   shoot: 0
