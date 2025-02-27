@@ -5,14 +5,14 @@ using UnityEngine;
 
 namespace NewMovment
 {
-	//https://www.youtube.com/watch?v=gNt9wBOrQO4
-	//https://www.youtube.com/watch?v=WfW0k5qENxM
+    //https://www.youtube.com/watch?v=WfW0k5qENxM&t=322
     public class PlayerMovement : MonoBehaviour
     {
         [Header("Movement")]
         private float moveSpeed;
         public float walkSpeed;
         public float sprintSpeed;
+        public float wallRunSpeed;
 
         public float GroundDrag;
         public float AirDrag;
@@ -20,19 +20,20 @@ namespace NewMovment
         public float jumpForce;
         public float jumpCooldown;
         public float airMultiplier;
+        public bool AirDragActive;
         bool readyToJump;
 
         [Header("Crouching")]
         public float crouchSpeed;
         public float crouchYScale;
         private float startYScale;
-        bool crouching;
+        
 
         [Header("Ground Check")]
         public float playerHeight;
         public LayerMask whatIsGround;
         public float maxGroudTime;
-        bool grounded;
+        public bool grounded;
 
         [Header("Slope Handling")]
         public float maxSlopeAngle;
@@ -48,7 +49,6 @@ namespace NewMovment
         float timer;
 
         Vector3 moveDir;
-
         Rigidbody rb;
         private StarterAssetsInputs _input;
         
@@ -57,9 +57,12 @@ namespace NewMovment
         {
             walking,
             sprinting,
+            wallrunning,
             crouching,
             air
         }
+        public bool crouching;
+        public bool wallrunning;
 
         void Start()
         {
@@ -78,8 +81,10 @@ namespace NewMovment
             StateHandler();
             if (grounded)
                 rb.drag = GroundDrag;
-            else
+            else if (AirDragActive)
                 rb.drag = AirDrag;
+            else if (!AirDragActive)
+                rb.drag = 0f;
         }
 
         private void FixedUpdate()
@@ -102,7 +107,7 @@ namespace NewMovment
 
                 Invoke(nameof(ResetJump), jumpCooldown);
             }
-            if(_input.crouch && !crouching)
+            if(_input.crouch && !crouching && !wallrunning)
             {
                 crouching = true;
                 transform.localScale = new Vector3(transform.localScale.x, crouchYScale, transform.localScale.z);
@@ -117,7 +122,12 @@ namespace NewMovment
         }
         private void StateHandler()
         {
-            if (_input.crouch)
+            if (wallrunning)
+            {
+                state = MovementState.wallrunning;
+                moveSpeed = wallRunSpeed;
+            }
+            else if (_input.crouch)
             {
                 state = MovementState.crouching;
                 moveSpeed = crouchSpeed;
@@ -155,6 +165,7 @@ namespace NewMovment
             else if(!grounded)
                 rb.AddForce(moveDir.normalized * moveSpeed * 10f * airMultiplier, ForceMode.Force);
 
+            if(!wallrunning)
             rb.useGravity = !OnSlope();
         }
         private void SpeedControl()
@@ -169,7 +180,12 @@ namespace NewMovment
                 Vector3 flatVel = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
                 if(flatVel.magnitude > moveSpeed)
                 {
-                    if (grounded && timer >= maxGroudTime)
+                    if (grounded && timer >= maxGroudTime && AirDragActive)
+                    {
+                        Vector3 limetedVel = flatVel.normalized * moveSpeed;
+                        rb.velocity = new Vector3(limetedVel.x, rb.velocity.y, limetedVel.z);
+                    }
+                    else if (!AirDragActive)
                     {
                         Vector3 limetedVel = flatVel.normalized * moveSpeed;
                         rb.velocity = new Vector3(limetedVel.x, rb.velocity.y, limetedVel.z);

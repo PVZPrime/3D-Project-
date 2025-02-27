@@ -37,5 +37,14 @@ namespace NewMovment
             transform.rotation = Quaternion.Euler(xRotation, yRotation, 0);
             orientatiion.rotation = Quaternion.Euler(0, yRotation, 0);
         }
+        public void DoFov(float endValue)
+        {
+
+        }
+
+        public void DoTile(float zTilt)
+        {
+
+        }
     }
 }
