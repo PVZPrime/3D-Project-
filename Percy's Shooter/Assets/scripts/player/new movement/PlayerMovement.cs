@@ -7,7 +7,6 @@ namespace NewMovment
 {
 	//https://www.youtube.com/watch?v=gNt9wBOrQO4
 	//https://www.youtube.com/watch?v=WfW0k5qENxM
-    //https://www.youtube.com/watch?v=xCxSjgYTw9c&t=197
     public class PlayerMovement : MonoBehaviour
     {
         [Header("Movement")]
@@ -34,6 +33,12 @@ namespace NewMovment
         public LayerMask whatIsGround;
         public float maxGroudTime;
         bool grounded;
+
+        [Header("Slope Handling")]
+        public float maxSlopeAngle;
+        private RaycastHit slopeHit;
+        private bool ExitingSlope;
+
 
         public Transform orientation;
 
@@ -83,7 +88,6 @@ namespace NewMovment
                 timer += Time.fixedDeltaTime;
             else timer = 0;
             MovePlayer();
-            Debug.Log(rb.velocity.magnitude);
         }
 
         private void MyInput()
@@ -138,25 +142,47 @@ namespace NewMovment
         {
             moveDir = orientation.forward * verticalInput + orientation.right * horizontalInput;
 
+            if(OnSlope() && !ExitingSlope)
+            {
+                rb.AddForce(GetSlopeMoveDirection() * moveSpeed * 20f, ForceMode.Force);
+
+                if (rb.velocity.y > 0)
+                    rb.AddForce(Vector3.down * 80f, ForceMode.Force);
+            }
+
             if(grounded)
                 rb.AddForce(moveDir.normalized * moveSpeed * 10f, ForceMode.Force);
             else if(!grounded)
                 rb.AddForce(moveDir.normalized * moveSpeed * 10f * airMultiplier, ForceMode.Force);
+
+            rb.useGravity = !OnSlope();
         }
         private void SpeedControl()
         {
-            Vector3 flatVel = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
-            if(flatVel.magnitude > moveSpeed)
+            if (OnSlope() && !ExitingSlope)
             {
-                if (grounded && timer >= maxGroudTime)
-                {
-                    Vector3 limetedVel = flatVel.normalized * moveSpeed;
-                    rb.velocity = new Vector3(limetedVel.x, rb.velocity.y, limetedVel.z);
-                }
+                if(rb.velocity.magnitude > moveSpeed)
+                    rb.velocity = rb.velocity.normalized * moveSpeed;
             }
+            else
+            {
+                Vector3 flatVel = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
+                if(flatVel.magnitude > moveSpeed)
+                {
+                    if (grounded && timer >= maxGroudTime)
+                    {
+                        Vector3 limetedVel = flatVel.normalized * moveSpeed;
+                        rb.velocity = new Vector3(limetedVel.x, rb.velocity.y, limetedVel.z);
+                    }
+                }
+
+            }
+
         }
         private void Jump()
         {
+            ExitingSlope = true;
+
             rb.velocity = new Vector3(rb.velocity.x, 0f , rb.velocity.z);
 
             rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
@@ -164,6 +190,31 @@ namespace NewMovment
         private void ResetJump()
         {
             readyToJump = true;
+
+            ExitingSlope = false;
         }
+
+        private bool OnSlope()
+        {
+            if(Physics.Raycast(transform.position, Vector3.down, out slopeHit, playerHeight * 0.5f + 0.3f))
+            {
+                float angle = Vector3.Angle(Vector3.up, slopeHit.normal);
+                return angle < maxSlopeAngle && angle != 0;
+            }
+
+            return false;
+        }
+
+        private Vector3 GetSlopeMoveDirection()
+        {
+            return Vector3.ProjectOnPlane(moveDir, slopeHit.normal).normalized;
+        }
+
+
+
+
+
+
+
     }
 }
