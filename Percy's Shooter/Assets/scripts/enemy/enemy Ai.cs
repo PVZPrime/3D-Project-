@@ -19,8 +19,9 @@ namespace Enemy
         public float timeBetweenAttacks;
         bool alreadyAttacked;
 
-        public float sightRange, attackRange;
+        public float sightRange, attackRange, ForwardForce, UpwardForce;
         public bool playerInSightRange, playerInAttackRange;
+        public GameObject Bullet;
         private void Awake()
         {
             Player = GameObject.FindGameObjectWithTag("Player").transform;
@@ -73,6 +74,11 @@ namespace Enemy
 
             if(!alreadyAttacked)
             {
+                Rigidbody rb = Instantiate(Bullet, transform.position, Quaternion.identity).GetComponent<Rigidbody>();
+
+                rb.AddForce(transform.forward * ForwardForce, ForceMode.Impulse);
+                rb.AddForce(transform.up * UpwardForce, ForceMode.Impulse);
+
                 alreadyAttacked = true;
                 Invoke(nameof(ResetAttack), timeBetweenAttacks);
             }
@@ -81,6 +87,13 @@ namespace Enemy
         private void ResetAttack()
         {
             alreadyAttacked = false;
+        }
+        private void OnDrawGizmosSelected()
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(transform.position, attackRange);
+            Gizmos.color = Color.yellow;
+            Gizmos.DrawWireSphere(transform.position, sightRange);
         }
     }
 }
