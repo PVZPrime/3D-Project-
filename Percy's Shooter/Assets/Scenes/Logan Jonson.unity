@@ -1288,13 +1288,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 918720198}
+  - component: {fileID: 918720214}
   - component: {fileID: 918720213}
   - component: {fileID: 918720212}
   - component: {fileID: 918720211}
   - component: {fileID: 918720210}
   - component: {fileID: 918720209}
-  - component: {fileID: 918720208}
-  - component: {fileID: 918720207}
   - component: {fileID: 918720206}
   - component: {fileID: 918720205}
   - component: {fileID: 918720204}
@@ -1444,37 +1443,6 @@ MonoBehaviour:
   PlayerSprintSpeedBuffed: 100
   PlayerRegenAmountBuffed: 5
   Cooldown: 30
---- !u!114 &918720207
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 918720197}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1dd6fd46b0276aa4c9904ba79f9d9246, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &918720208
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 918720197}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8a455ad92fd83b94c8315c5d8a99af1f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  MaxXP: 100
-  Level1: 0
-  Level2: 0
-  Level3: 0
-  Level4: 0
-  Level5: 0
-  Level6: 0
 --- !u!114 &918720209
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1614,6 +1582,7 @@ MonoBehaviour:
   Reload: 0
   interact: 0
   Climb: 0
+  Slide: 0
   Ability1: 0
   Ability2: 0
   analogMovement: 0
@@ -1636,10 +1605,10 @@ MonoBehaviour:
   wallRunSpeed: 8.5
   GroundDrag: 5
   AirDrag: 2
-  jumpForce: 9
+  jumpForce: 12
   jumpCooldown: 0.25
   airMultiplier: 0.4
-  AirDragActive: 0
+  AirDragActive: 1
   crouchSpeed: 3.5
   crouchYScale: 0.5
   playerHeight: 2
@@ -1679,9 +1648,27 @@ MonoBehaviour:
   WallCheckDistance: 0.7
   minJumpHeight: 2
   exitWallTime: 0.2
-  useGravity: 0
-  gravityCounterForce: -1
+  useGravity: 1
+  gravityCounterForce: 14
   orientation: {fileID: 136543125}
+--- !u!114 &918720214
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 918720197}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c83b85c105f0d65418b3fd6739fbac9c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  orientation: {fileID: 136543125}
+  PlayerObj: {fileID: 1510837297}
+  maxSlideTime: 0.75
+  slideForce: 2000
+  slideTimer: 0
+  slideYScale: 0.5
 --- !u!1 &1040535875
 GameObject:
   m_ObjectHideFlags: 0
@@ -2567,7 +2554,7 @@ GameObject:
   - component: {fileID: 1510837299}
   - component: {fileID: 1510837298}
   m_Layer: 0
-  m_Name: Capsule (1)
+  m_Name: Capsule
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3372,6 +3359,7 @@ MonoBehaviour:
   Reload: 0
   interact: 0
   Climb: 0
+  Slide: 0
   Ability1: 0
   Ability2: 0
   analogMovement: 0

@@ -50,7 +50,7 @@ namespace NewMovment
 
         Vector3 moveDir;
         Rigidbody rb;
-        private StarterAssetsInputs _input;
+        private StarterAssetsInputs it;
         
         public MovementState state;
         public enum MovementState
@@ -66,7 +66,7 @@ namespace NewMovment
 
         void Start()
         {
-            _input = GetComponent<StarterAssetsInputs>();
+            it = GetComponent<StarterAssetsInputs>();
             rb = GetComponent<Rigidbody>();
             rb.freezeRotation = true; 
             readyToJump = true;
@@ -97,24 +97,24 @@ namespace NewMovment
 
         private void MyInput()
         {
-            horizontalInput = _input.move.x;
-            verticalInput = _input.move.y;
+            horizontalInput = it.move.x;
+            verticalInput = it.move.y;
 
-            if(_input.jump && readyToJump && grounded)
+            if(it.jump && readyToJump && grounded)
             {
                 readyToJump = false;
                 Jump();
 
                 Invoke(nameof(ResetJump), jumpCooldown);
             }
-            if(_input.crouch && !crouching && !wallrunning)
+            if(it.crouch && !crouching && !wallrunning)
             {
                 crouching = true;
                 transform.localScale = new Vector3(transform.localScale.x, crouchYScale, transform.localScale.z);
                 if (grounded)
                 rb.AddForce(Vector3.down * 5f, ForceMode.Impulse);
             }
-            else if(!_input.crouch)
+            else if(!it.crouch)
             {
                 crouching = false;
                 transform.localScale = new Vector3(transform.localScale.x, startYScale, transform.localScale.z);
@@ -127,12 +127,12 @@ namespace NewMovment
                 state = MovementState.wallrunning;
                 moveSpeed = wallRunSpeed;
             }
-            else if (_input.crouch)
+            else if (it.crouch)
             {
                 state = MovementState.crouching;
                 moveSpeed = crouchSpeed;
             }
-            else if (grounded && _input.sprint)
+            else if (grounded && it.sprint)
             {
                 state = MovementState.sprinting;
                 moveSpeed = sprintSpeed;

@@ -17,6 +17,7 @@ namespace StarterAssets
         public bool Reload;
         public bool interact;
 		public bool Climb;
+		public bool Slide;
 		public bool Ability1;
 		public bool Ability2;
 
@@ -81,6 +82,10 @@ namespace StarterAssets
         {
             CrouchInput(value.isPressed);
         }
+        public void OnSlide(InputValue value)
+        {
+            SlideInput(value.isPressed);
+        }
 #endif
         public void Ability1Input(bool newAbility1State)
         {
@@ -89,6 +94,10 @@ namespace StarterAssets
         public void CrouchInput(bool newcrouchState)
         {
             crouch = newcrouchState;
+        }
+        public void SlideInput(bool newSlideState)
+        {
+            Slide = newSlideState;
         }
         public void Ability2Input(bool newAbility2State)
         {
