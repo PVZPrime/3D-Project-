@@ -8,6 +8,8 @@ TagManager:
   - Enemy
   - Bullet
   - default
+  - PickupItemAmmo
+  - PickupItemHealth
   layers:
   - Default
   - TransparentFX

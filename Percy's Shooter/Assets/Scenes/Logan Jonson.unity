@@ -955,10 +955,13 @@ MonoBehaviour:
   timeBetweenAttacks: 5
   sightRange: 20
   attackRange: 10
+  meleeAttackRange: 0
   ForwardForce: 10
   UpwardForce: 0
   playerInSightRange: 0
   playerInAttackRange: 0
+  playerInMeleeAttackRange: 0
+  meleeAttack: 0
   Bullet: {fileID: 6203379121662253678, guid: b17b394757b34cb4ebc272847b8dd469, type: 3}
 --- !u!195 &658231696
 NavMeshAgent:
@@ -1359,7 +1362,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 918720197}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6d1a250a1210fc24f9f5cf6e2746c299, type: 3}
   m_Name: 
@@ -1402,7 +1405,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 918720197}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8dc3f3b8cb7030049ba20cc896bddbdc, type: 3}
   m_Name: 
@@ -1416,13 +1419,13 @@ MonoBehaviour:
   TimeBetweenShots: 0
   MagSize: 160
   BulletsPerTap: 10
-  BulletsAvalible: 0
+  BulletsAvalible: 150
   AutoReload: 1
   TimeBetweenAbilities: 25
   saveCoolDown: 0
   Ability1Bullets: 50
-  Cam: {fileID: 0}
-  AttackPoint: {fileID: 0}
+  Cam: {fileID: 7852215993289118803}
+  AttackPoint: {fileID: 184451563}
   AllowInvoke: 1
   AllowInvokeAbility: 1
   MuzzleFlash: {fileID: 0}
