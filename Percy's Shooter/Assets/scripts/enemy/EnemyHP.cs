@@ -8,8 +8,7 @@ namespace Enemy
 {
     public class EnemyHP : MonoBehaviour
     {
-        [SerializeField]
-        float health = 2;
+        public float health = 2;
         float MaxHealth;
         float time;
         [SerializeField]

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
+//https://www.youtube.com/watch?v=aNZw588BQBo
 //https://www.youtube.com/watch?v=UjkSFoLxesw
 namespace Enemy
 {
@@ -19,8 +20,8 @@ namespace Enemy
         public float timeBetweenAttacks;
         bool alreadyAttacked;
 
-        public float sightRange, attackRange, ForwardForce, UpwardForce;
-        public bool playerInSightRange, playerInAttackRange;
+        public float sightRange, attackRange, meleeAttackRange, ForwardForce, UpwardForce;
+        public bool playerInSightRange, playerInAttackRange, playerInMeleeAttackRange, meleeAttack;
         public GameObject Bullet;
         private void Awake()
         {
@@ -32,10 +33,12 @@ namespace Enemy
         {
             playerInSightRange = Physics.CheckSphere(transform.position, sightRange, whatIsPlayer);
             playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, whatIsPlayer);
+            playerInMeleeAttackRange = Physics.CheckSphere(transform.position, meleeAttackRange, whatIsPlayer);
 
             if (!playerInSightRange && !playerInAttackRange) Patroling();
             if (playerInSightRange && !playerInAttackRange) ChasePlayer();
-            if (playerInSightRange && playerInAttackRange) AttackPlayer();
+            if (playerInSightRange && playerInAttackRange && !meleeAttack) AttackPlayer();
+            else if (playerInSightRange && playerInMeleeAttackRange && meleeAttack) MeleeAttack();
 
         }
 
@@ -82,6 +85,10 @@ namespace Enemy
                 alreadyAttacked = true;
                 Invoke(nameof(ResetAttack), timeBetweenAttacks);
             }
+        }
+        private void MeleeAttack()
+        {
+
         }
 
         private void ResetAttack()
