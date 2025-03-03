@@ -22,7 +22,7 @@ namespace player
         public float TimeBetweenShooting;
         public float Spread, ReloadTime, TimeBetweenShots;
         public int MagSize, BulletsPerTap;
-        public int bulletsLeft  {  get; set; }
+        public int BulletsLeft  {  get; set; }
         public int BulletsAvalible;
         int BulletsShot;
         bool Shooting, ReadyToShoot; 
@@ -51,7 +51,7 @@ namespace player
 
         public void Awake()
         {
-            bulletsLeft = MagSize;
+            BulletsLeft = MagSize;
             ReadyToShoot = true;
             ReadyToActivate = true;
         }
@@ -65,7 +65,7 @@ namespace player
         {
             MyInput();
             if (AmmoDisplay != null)
-                AmmoDisplay.SetText(bulletsLeft / BulletsPerTap + " / " + MagSize / BulletsPerTap);
+                AmmoDisplay.SetText(BulletsLeft / BulletsPerTap + " / " + BulletsAvalible / BulletsPerTap);
             if(SaveCoolDownActive)
             {
                 saveCoolDown -= Time.deltaTime;
@@ -77,18 +77,18 @@ namespace player
             if (_input.Reload /*&& bulletsLeft < MagSize*/ && !Reloading) Reload();
             if (AutoReload)
             {
-                if (ReadyToShoot && Shooting && !Reloading && bulletsLeft <= 0) Reload();
+                if (ReadyToShoot && Shooting && !Reloading && BulletsLeft <= 0) Reload();
             }
 
 
             Shooting = _input.shoot;
-            if (ReadyToShoot && Shooting && !Reloading && bulletsLeft > 0)
+            if (ReadyToShoot && Shooting && !Reloading && BulletsLeft > 0)
             {
                 BulletsShot = 0;
                 Shoot();
             }
             Ability1Active = _input.Ability1;
-            if (ReadyToActivate && Ability1Active && !Reloading && bulletsLeft > Ability1Bullets)
+            if (ReadyToActivate && Ability1Active && !Reloading && BulletsLeft > Ability1Bullets)
             {
                 BulletsShot = 0;
                 Ability1();
@@ -98,10 +98,9 @@ namespace player
         {
             ReadyToShoot = false;
             Ray ray = Cam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
-            RaycastHit hit;
 
             Vector3 targetPoint;
-            if (Physics.Raycast(ray, out hit)) targetPoint = hit.point;
+            if (Physics.Raycast(ray, out RaycastHit hit)) targetPoint = hit.point;
             else targetPoint = ray.GetPoint(75);
 
             Vector3 directionWithoutSpread = targetPoint - AttackPoint.position;
@@ -114,8 +113,7 @@ namespace player
             GameObject currentBullet = ObjectPooling.SharedInstance.GetPooledObject();
             if (currentBullet != null)
             {
-                currentBullet.transform.position = AttackPoint.transform.position;
-                currentBullet.transform.rotation = AttackPoint.transform.rotation;
+                currentBullet.transform.SetPositionAndRotation(AttackPoint.transform.position, AttackPoint.transform.rotation);
                 currentBullet.SetActive(true);
 
                 currentBullet.transform.forward = directionWithSpread.normalized;
@@ -128,26 +126,25 @@ namespace player
             if (MuzzleFlash != null)
                 Instantiate(MuzzleFlash, AttackPoint.position, Quaternion.identity);
 
-            bulletsLeft--;
+            BulletsLeft--;
             BulletsShot++;
 
             if (AllowInvoke)
             {
                 //Invoke("ResetShot", 3f); calls function after 3 seconds
-                Invoke("ResetShot", TimeBetweenShooting);
+                Invoke(nameof(ResetShot), TimeBetweenShooting);
                 AllowInvoke = false;
             }
-            if (BulletsShot < BulletsPerTap && bulletsLeft > 0)
-                Invoke("Shoot", TimeBetweenShots);
+            if (BulletsShot < BulletsPerTap && BulletsLeft > 0)
+                Invoke(nameof(Shoot), TimeBetweenShots);
         }
         private void Ability1()
         {
             ReadyToActivate = false;
             Ray ray = Cam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
-            RaycastHit hit;
 
             Vector3 targetPoint;
-            if (Physics.Raycast(ray, out hit)) targetPoint = hit.point;
+            if (Physics.Raycast(ray, out RaycastHit hit)) targetPoint = hit.point;
             else targetPoint = ray.GetPoint(75);
 
             Vector3 directionWithoutSpread = targetPoint - AttackPoint.position;
@@ -160,8 +157,7 @@ namespace player
             GameObject currentBullet = ObjectPooling.SharedInstance.GetPooledObject();
             if (currentBullet != null)
             {
-                currentBullet.transform.position = AttackPoint.transform.position;
-                currentBullet.transform.rotation = AttackPoint.transform.rotation;
+                currentBullet.transform.SetPositionAndRotation(AttackPoint.transform.position, AttackPoint.transform.rotation);
                 currentBullet.SetActive(true);
 
                 currentBullet.transform.forward = directionWithSpread.normalized;
@@ -172,7 +168,7 @@ namespace player
             if (MuzzleFlash != null)
                 Instantiate(MuzzleFlash, AttackPoint.position, Quaternion.identity);
 
-            bulletsLeft--;
+            BulletsLeft--;
             BulletsShot++;
 
             if (AllowInvokeAbility)
@@ -180,13 +176,13 @@ namespace player
                 if (saveCoolDown == TimeBetweenAbilities)
                 {
                     //Invoke("ResetShot", 3f); calls function after 3 seconds
-                    Invoke("ResetAbility", TimeBetweenAbilities);
+                    Invoke(nameof(ResetAbility), TimeBetweenAbilities);
                     AllowInvokeAbility = false;
                     SaveCoolDownActive = true;
                 }
             }
-            if (BulletsShot < Ability1Bullets && bulletsLeft > 0)
-                Invoke("Ability1", TimeBetweenShots);
+            if (BulletsShot < Ability1Bullets && BulletsLeft > 0)
+                Invoke(nameof(Ability1), TimeBetweenShots);
         }
         private void ResetAbility()
         {
@@ -203,19 +199,29 @@ namespace player
         private void Reload()
         {
             Reloading = true;
-            if(Reloading) Invoke("ReloadFinished", ReloadTime);
+            if(Reloading) Invoke(nameof(ReloadFinished), ReloadTime);
         }
         private void ReloadFinished()
         {
+            int a = MagSize;
+            int b = BulletsLeft;
+            int c = BulletsAvalible;
+            int d = b - a;
+            int e = c - -d;
             if (BulletsAvalible >= MagSize)
             {
-                bulletsLeft = MagSize;
-                BulletsAvalible -= MagSize;
+                BulletsLeft = MagSize;
+                BulletsAvalible -= -d;
             } else
             {
                 //get the billets left then only add an amout that will make it equal to at max MagSize
-                bulletsLeft = BulletsAvalible;
-                BulletsAvalible = 0;
+                BulletsLeft += -d;
+                BulletsAvalible -= -d;
+                if (e < 0) 
+                {
+                    BulletsAvalible += -e;
+                    BulletsLeft += e; 
+                }
             }
             Reloading = false;
         }

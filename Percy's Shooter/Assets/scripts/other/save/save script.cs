@@ -7,13 +7,13 @@ using player;
 public class SaveScript : MonoBehaviour
 {
     string password = "1234567890";
-    CharacterController CC;
+    //CharacterController CC;
     PlayerShoot PS;
     PlayerHealth PH;
     ability2 A2;
     void Start()
     {
-        CC = GetComponent<CharacterController>();
+        //CC = GetComponent<CharacterController>();
         PS = GetComponent<PlayerShoot>();
         PH = GetComponent<PlayerHealth>();
         A2 = GetComponent<ability2>();
@@ -40,7 +40,7 @@ public class SaveScript : MonoBehaviour
         myData.z = transform.position.z;
         myData.health = PH.health;
         myData.Ab1Timer = PS.saveCoolDown;
-        myData.Ammo = PS.bulletsLeft;
+        myData.Ammo = PS.BulletsLeft;
         myData.Ab2Timer = A2.time;
         myData.Ab2TimeLeft = A2.Length;
         myData.Ab1TimerActive = PS.SaveCoolDownActive;
@@ -60,12 +60,12 @@ public class SaveScript : MonoBehaviour
             string jsonData = File.ReadAllText(file);
             jsonData = EncryptDecryptData(jsonData);
             PlayerSaveData myData = JsonUtility.FromJson<PlayerSaveData>(jsonData);
-            CC.enabled = false;
+            //CC.enabled = false;
             transform.position = new Vector3(myData.x, myData.y, myData.z);
-            CC.enabled = true;
+            //CC.enabled = true;
             PH.health = myData.health;
             PS.saveCoolDown = myData.Ab1Timer;
-            PS.bulletsLeft = myData.Ammo;
+            PS.BulletsLeft = myData.Ammo;
             A2.time = myData.Ab2Timer;
             A2.Length = myData.Ab2TimeLeft;
             PS.SaveCoolDownActive = myData.Ab1TimerActive;

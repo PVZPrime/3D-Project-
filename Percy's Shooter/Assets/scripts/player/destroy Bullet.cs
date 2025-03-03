@@ -7,16 +7,19 @@ namespace player
     public class DestroyBullet : MonoBehaviour
     {
         public float timeToDestroy = 5f;
-        float timer;
+        public float Timer {  get; set; }
+        public bool Active { get; set; }
         void Update()
         {
-            timer += Time.deltaTime;
-            if (timer >= timeToDestroy)
+            Timer += Time.deltaTime;
+            if (Timer <= timeToDestroy) Active = true;
+            if (Timer >= timeToDestroy)
             {
                 //Destroy(gameObject);
                 gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
+                Active = false;
                 gameObject.SetActive(false);
-                timer = 0;
+                Timer = 0;
             }
         }
         private void OnTriggerEnter(Collider coll)

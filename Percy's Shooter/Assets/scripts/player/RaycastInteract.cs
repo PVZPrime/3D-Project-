@@ -18,9 +18,17 @@ namespace player
         float interactRange = 4;
         [SerializeField]
         TextMeshProUGUI InteractText;
+        public float InteractDelay = 0.1f;
+        RaycastHit hit;
+        PlayerHealth PH;
+        PlayerShoot PS;
+        public float HealAmount;
+        public int AmmoAdded;
         // Start is called before the first frame update
         void Start()
         {
+            PS = GetComponent<PlayerShoot>();
+            PH = GetComponent<PlayerHealth>();
             InteractText.enabled = false;
             _input = GetComponent<StarterAssetsInputs>();
         }
@@ -28,17 +36,35 @@ namespace player
         // Update is called once per frame
         void Update()
         {
-            RaycastHit hit;
-            Ray ray = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
+            //RaycastHit hit;
+            Ray ray = new(Camera.main.transform.position, Camera.main.transform.forward);
             if (Physics.Raycast(ray, out hit, interactRange))
             {
-                if (hit.collider.gameObject.tag == "Interactable")
+                if (hit.collider.gameObject.CompareTag("Interactable"))
                 {
                     InteractText.enabled = true;
                     if (_input.interact)
                     {
                         //needs a small cooldown
                         hit.collider.gameObject.GetComponent<Animator>().SetTrigger("Interact");
+                        InteractText.enabled = false;
+                    }
+                }
+                else if (hit.collider.gameObject.CompareTag("PickupItemAmmo"))
+                {
+                    InteractText.enabled = true;
+                    if (_input.interact)
+                    {
+                        Invoke(nameof(PickupItemAmmo), InteractDelay);
+                        InteractText.enabled = false;
+                    }
+                }
+                else if (hit.collider.gameObject.CompareTag("PickupItemHealth"))
+                {
+                    InteractText.enabled = true;
+                    if (_input.interact)
+                    {
+                        Invoke(nameof(PickupItemHealth), InteractDelay);
                         InteractText.enabled = false;
                     }
                 }
@@ -50,6 +76,23 @@ namespace player
             else
             {
                 InteractText.enabled = false;
+            }
+        }
+
+        public void PickupItemAmmo()
+        {
+            if (hit.collider.gameObject.CompareTag("PickupItemAmmo") && _input.interact)
+            {
+                PS.BulletsAvalible += AmmoAdded;
+                hit.collider.gameObject.SetActive(false);
+            }
+        }
+        public void PickupItemHealth()
+        {
+            if (hit.collider.gameObject.CompareTag("PickupItemHealth") && _input.interact)
+            {
+                hit.collider.gameObject.SetActive(false);
+                PH.health += HealAmount;
             }
         }
     }

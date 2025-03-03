@@ -34,6 +34,10 @@ namespace player
             {
                 health += RegenAmount;
             }
+            if (health > MaxHealth)
+            {
+                health = MaxHealth;
+            }
         }
         public void TakeDamage(int damage)
         {
