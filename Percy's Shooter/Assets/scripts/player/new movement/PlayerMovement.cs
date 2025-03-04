@@ -1,6 +1,7 @@
 using StarterAssets;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 namespace NewMovment
@@ -40,6 +41,7 @@ namespace NewMovment
         public float playerHeight;
         public LayerMask whatIsGround;
         public float maxGroudTime;
+        [HideInInspector]
         public bool grounded;
 
         [Header("Slope Handling")]
@@ -48,7 +50,10 @@ namespace NewMovment
         private bool ExitingSlope;
 
 
+
+        [Header("References")]
         public Transform orientation;
+        public TextMeshProUGUI Speed;
 
         float horizontalInput;
         float verticalInput;
@@ -69,8 +74,11 @@ namespace NewMovment
             sliding,
             air
         }
+        [HideInInspector]
         public bool sliding;
+        [HideInInspector]
         public bool crouching;
+        [HideInInspector]
         public bool wallrunning;
 
         void Start()
@@ -92,6 +100,8 @@ namespace NewMovment
                 rb.drag = GroundDrag;
             else
                 rb.drag = 0f;
+            if(Speed != null)
+            Speed.SetText("Speed: " + rb.velocity.magnitude);
         }
 
         private void FixedUpdate()
