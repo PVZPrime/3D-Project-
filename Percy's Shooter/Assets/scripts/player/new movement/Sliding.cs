@@ -18,7 +18,7 @@ namespace NewMovment
         [Header("Sliding")]
         public float maxSlideTime;
         public float slideForce;
-        public float slideTimer;
+        float slideTimer;
 
         public float slideYScale;
         private float StartYScale;
@@ -43,35 +43,52 @@ namespace NewMovment
             horizontalInput = it.move.x; 
             verticalInput = it.move.y;
 
-            if (it.Slide && (horizontalInput != 0 || verticalInput != 0))
+            if (it.Slide && (horizontalInput != 0 || verticalInput != 0) && !pm.sliding)
+            {
                 StartSlide();
-            if(!it.Slide && sliding)
+            }
+            if (!it.Slide && pm.sliding)
+            {
                 StopSlide();
+            }
         }
 
         private void FixedUpdate()
         {
-            if (sliding)
+            if (pm.sliding)
                 SlidingMovement();
         }
 
         private void StartSlide()
         {
-            sliding = true;
-
+            pm.sliding = true;
             PlayerObj.localScale = new Vector3(PlayerObj.localScale.x, slideYScale, PlayerObj.localScale.z);
-            rb.AddForce(Vector3.down * 5f, ForceMode.Impulse);
+            rb.AddForce(Vector3.down * 2f, ForceMode.Impulse);
 
             slideTimer = maxSlideTime;
         }
 
         private void SlidingMovement()
         {
+
+
+
+
             Vector3 inputDir = orientation.forward * verticalInput + orientation.right * horizontalInput;
 
+            if(!pm.OnSlope() || rb.velocity.y > -0.1f)
+            {
             rb.AddForce(inputDir.normalized * slideForce, ForceMode.Force);
 
             slideTimer -= Time.deltaTime;
+            rb.AddForce(Vector3.down * 5f, ForceMode.Impulse);
+            }
+            else
+            {
+                rb.AddForce(pm.GetSlopeMoveDirection(inputDir) * slideForce, ForceMode.Force);
+
+            }
+
 
             if (slideTimer <= 0)
                 StopSlide();
@@ -79,7 +96,7 @@ namespace NewMovment
 
         private void StopSlide()
         {
-            sliding = false;
+            pm.sliding = false;
             PlayerObj.localScale = new Vector3(PlayerObj.localScale.x, StartYScale, PlayerObj.localScale.z);
         }
 

@@ -13,14 +13,21 @@ namespace NewMovment
         public float walkSpeed;
         public float sprintSpeed;
         public float wallRunSpeed;
+        public float slideSpeed;
+        [Tooltip("The difference in speed of the last way of moving and the current")]
+        public float MaxSpeedDifference = 4f;
+
+        public float speedIncreaseMultiplier;
+        public float slopeIncreaseMultiplier;
+
+        private float desiredMoveSpeed;
+        private float lastDesiredMoveSpeed;
 
         public float GroundDrag;
-        public float AirDrag;
         [Header("Jumping")]
         public float jumpForce;
         public float jumpCooldown;
         public float airMultiplier;
-        public bool AirDragActive;
         bool readyToJump;
 
         [Header("Crouching")]
@@ -59,8 +66,10 @@ namespace NewMovment
             sprinting,
             wallrunning,
             crouching,
+            sliding,
             air
         }
+        public bool sliding;
         public bool crouching;
         public bool wallrunning;
 
@@ -75,15 +84,13 @@ namespace NewMovment
         }
         private void Update()
         {
-            grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + .2f, whatIsGround); 
+            grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.3f, whatIsGround); 
             MyInput();
             SpeedControl();
             StateHandler();
             if (grounded)
                 rb.drag = GroundDrag;
-            else if (AirDragActive)
-                rb.drag = AirDrag;
-            else if (!AirDragActive)
+            else
                 rb.drag = 0f;
         }
 
@@ -122,31 +129,83 @@ namespace NewMovment
         }
         private void StateHandler()
         {
-            if (wallrunning)
+
+
+
+            if(sliding)
+            {
+                state = MovementState.sliding;
+
+                if(OnSlope() && rb.velocity.y < 0.1f)
+                    desiredMoveSpeed = slideSpeed;
+                else 
+                    desiredMoveSpeed = sprintSpeed;
+            }
+            else if (wallrunning)
             {
                 state = MovementState.wallrunning;
-                moveSpeed = wallRunSpeed;
+                desiredMoveSpeed = wallRunSpeed;
             }
             else if (it.crouch)
             {
                 state = MovementState.crouching;
-                moveSpeed = crouchSpeed;
+                desiredMoveSpeed = crouchSpeed;
             }
             else if (grounded && it.sprint)
             {
                 state = MovementState.sprinting;
-                moveSpeed = sprintSpeed;
+                desiredMoveSpeed = sprintSpeed;
             }
             else if(grounded)
             {
                 state = MovementState.walking;
-                moveSpeed = walkSpeed;
+                desiredMoveSpeed = walkSpeed;
             }
             else
             {
                 state = MovementState.air;
             }
+
+            if(Mathf.Abs(desiredMoveSpeed - lastDesiredMoveSpeed) > MaxSpeedDifference && moveSpeed!= 0)
+            {
+                StopAllCoroutines();
+                StartCoroutine(SmoothlyLerpMoveSpeed());
+            }
+            else
+            {
+                moveSpeed = desiredMoveSpeed;
+            }
+
+            lastDesiredMoveSpeed = desiredMoveSpeed;
         }
+
+        private IEnumerator SmoothlyLerpMoveSpeed()
+        {
+            float time = 0;
+            float difference = Mathf.Abs(desiredMoveSpeed - moveSpeed);
+            float startValue = moveSpeed;
+
+            while(time < difference)
+            {
+                moveSpeed = Mathf.Lerp(startValue, desiredMoveSpeed, time / difference);
+                if (OnSlope())
+                {
+                    float slopeAngle = Vector3.Angle(Vector3.up, slopeHit.normal);
+                    float slopeAngleIncrease = 1 + (slopeAngle / 90f);
+
+                    time += Time.deltaTime * speedIncreaseMultiplier * slopeIncreaseMultiplier * slopeAngleIncrease;
+                }
+                else
+                    time += Time.deltaTime * speedIncreaseMultiplier;
+
+                //time += Time.deltaTime;
+                yield return null;
+            }
+
+            moveSpeed = desiredMoveSpeed;
+        }
+
+
 
         private void MovePlayer()
         {
@@ -154,13 +213,13 @@ namespace NewMovment
 
             if(OnSlope() && !ExitingSlope)
             {
-                rb.AddForce(GetSlopeMoveDirection() * moveSpeed * 20f, ForceMode.Force);
+                rb.AddForce(GetSlopeMoveDirection(moveDir) * moveSpeed * 20f, ForceMode.Force);
 
                 if (rb.velocity.y > 0)
                     rb.AddForce(Vector3.down * 80f, ForceMode.Force);
             }
 
-            if(grounded)
+            else if (grounded)
                 rb.AddForce(moveDir.normalized * moveSpeed * 10f, ForceMode.Force);
             else if(!grounded)
                 rb.AddForce(moveDir.normalized * moveSpeed * 10f * airMultiplier, ForceMode.Force);
@@ -180,16 +239,8 @@ namespace NewMovment
                 Vector3 flatVel = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
                 if(flatVel.magnitude > moveSpeed)
                 {
-                    if (grounded && timer >= maxGroudTime && AirDragActive)
-                    {
                         Vector3 limetedVel = flatVel.normalized * moveSpeed;
                         rb.velocity = new Vector3(limetedVel.x, rb.velocity.y, limetedVel.z);
-                    }
-                    else if (!AirDragActive)
-                    {
-                        Vector3 limetedVel = flatVel.normalized * moveSpeed;
-                        rb.velocity = new Vector3(limetedVel.x, rb.velocity.y, limetedVel.z);
-                    }
                 }
 
             }
@@ -210,7 +261,7 @@ namespace NewMovment
             ExitingSlope = false;
         }
 
-        private bool OnSlope()
+        public bool OnSlope()
         {
             if(Physics.Raycast(transform.position, Vector3.down, out slopeHit, playerHeight * 0.5f + 0.3f))
             {
@@ -218,12 +269,12 @@ namespace NewMovment
                 return angle < maxSlopeAngle && angle != 0;
             }
 
-            return false;
+            else return false;
         }
 
-        private Vector3 GetSlopeMoveDirection()
+        public Vector3 GetSlopeMoveDirection(Vector3 Dir)
         {
-            return Vector3.ProjectOnPlane(moveDir, slopeHit.normal).normalized;
+            return Vector3.ProjectOnPlane(Dir, slopeHit.normal).normalized;
         }
 
 
