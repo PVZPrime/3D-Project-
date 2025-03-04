@@ -70,10 +70,6 @@ namespace NewMovment
 
         private void SlidingMovement()
         {
-
-
-
-
             Vector3 inputDir = orientation.forward * verticalInput + orientation.right * horizontalInput;
 
             if(!pm.OnSlope() || rb.velocity.y > -0.1f)
