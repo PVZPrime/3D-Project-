@@ -71,10 +71,10 @@ MonoBehaviour:
   active: 1
   lift:
     m_OverrideState: 1
-    m_Value: {x: 1, y: 1, z: 1, w: -0.024449877}
+    m_Value: {x: 1, y: 1, z: 1, w: -0.023923533}
   gamma:
     m_OverrideState: 1
-    m_Value: {x: 1, y: 1, z: 1, w: 0.02444988}
+    m_Value: {x: 1, y: 1, z: 1, w: -0.16693766}
   gain:
     m_OverrideState: 1
     m_Value: {x: 1, y: 1, z: 1, w: 0.2444988}
