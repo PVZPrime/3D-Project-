@@ -43,6 +43,8 @@ namespace player
         [Header("Debuging")]
         public bool AllowInvoke = true;
         public bool AllowInvokeAbility = true;
+        public bool animationActive;
+        public bool animationActiveAbility;
         private StarterAssetsInputs _input;
         Animator anim;
 
@@ -58,7 +60,7 @@ namespace player
         }
         void Start()
         {
-            anim = GetComponent<Animator>();
+            anim = GameObject.FindGameObjectWithTag("right").GetComponent<Animator>();
             saveCoolDown = TimeBetweenAbilities;
             _input = GetComponent<StarterAssetsInputs>();
         }
@@ -130,7 +132,6 @@ namespace player
 
             BulletsLeft--;
             BulletsShot++;
-            if (anim != null) anim.SetTrigger("shoot");
             if (AllowInvoke)
             {
                 //Invoke("ResetShot", 3f); calls function after 3 seconds
@@ -139,6 +140,11 @@ namespace player
             }
             if (BulletsShot < BulletsPerTap && BulletsLeft > 0)
                 Invoke(nameof(Shoot), TimeBetweenShots);
+            if (anim != null && !animationActive)
+            {
+                anim.SetTrigger("shoot"); 
+                animationActive = true;
+            }
         }
         private void Ability1()
         {
@@ -172,7 +178,11 @@ namespace player
 
             BulletsLeft--;
             BulletsShot++;
-            if (anim != null) anim.SetTrigger("ability1");
+            if (anim != null && !animationActiveAbility)
+            {
+                anim.SetTrigger("ability1");
+                animationActiveAbility = true;
+            }
             if (AllowInvokeAbility)
             {
                 if (saveCoolDown == TimeBetweenAbilities)
@@ -192,14 +202,17 @@ namespace player
             saveCoolDown = TimeBetweenAbilities;
             ReadyToActivate = true;
             AllowInvokeAbility = true;
+            animationActiveAbility = false;
         }
         private void ResetShot()
         {
             ReadyToShoot = true;
             AllowInvoke = true;
+            animationActive = false;
         }
         private void Reload()
         {
+            anim.SetTrigger("reload"); 
             Reloading = true;
             if(Reloading) Invoke(nameof(ReloadFinished), ReloadTime);
         }

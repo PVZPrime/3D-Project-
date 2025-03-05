@@ -31,7 +31,7 @@ namespace player
         // Start is called before the first frame update
         void Start()
         {
-            anim = GetComponent<Animator>();
+            anim = GameObject.FindGameObjectWithTag("left").GetComponent<Animator>();
             _input = GetComponent<StarterAssetsInputs>();
             FPC = GetComponent<FirstPersonController>();
             PlayerHealth = GetComponent<PlayerHealth>();

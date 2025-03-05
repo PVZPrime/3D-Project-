@@ -3509,13 +3509,13 @@ Transform:
   m_GameObject: {fileID: 8386632501964502066}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.50099945, y: -0.593, z: 2.1980019}
+  m_LocalPosition: {x: 0.7, y: -0.4, z: 2.7}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3098053576536176658}
   - {fileID: 2144457102687116958}
-  m_Father: {fileID: 4733171997351138892}
+  m_Father: {fileID: 3838836310324378740}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &1633880383886928240
 Animator:
@@ -3702,7 +3702,7 @@ Transform:
   m_GameObject: {fileID: 8227441684858376814}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.293, y: 0.07, z: -2.205}
+  m_LocalPosition: {x: -0.402, y: -0.1, z: -2.205}
   m_LocalScale: {x: 0.049999997, y: 0.049999997, z: 0.050000004}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -4203,7 +4203,7 @@ Transform:
   m_GameObject: {fileID: 5071493660594037372}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.505, y: -0.491, z: -0.551}
+  m_LocalPosition: {x: 0.559, y: -0.5, z: -0.6}
   m_LocalScale: {x: 0.050000004, y: 0.050000004, z: 0.050000004}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -4522,7 +4522,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &3423767386091970884
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4539,7 +4539,7 @@ MonoBehaviour:
   sprintSpeed: 10
   wallRunSpeed: 8.5
   slideSpeed: 30
-  climbSpeed: 1
+  climbSpeed: 3
   MaxSpeedDifference: 4
   speedIncreaseMultiplier: 1.5
   slopeIncreaseMultiplier: 2.5
@@ -4897,7 +4897,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1502881815835951126}
   m_Father: {fileID: 127963445075829639}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &3897125735492976189
@@ -5147,6 +5148,8 @@ MonoBehaviour:
   AttackPoint: {fileID: 184451563}
   AllowInvoke: 1
   AllowInvokeAbility: 1
+  animationActive: 0
+  animationActiveAbility: 0
   MuzzleFlash: {fileID: 0}
   AmmoDisplay: {fileID: 1118455515}
 --- !u!114 &4716530625819609000
@@ -5241,8 +5244,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0.593, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1502881815835951126}
+  m_Children: []
   m_Father: {fileID: 3102827631001458660}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &4882508721744839697
@@ -5283,7 +5285,7 @@ GameObject:
   - component: {fileID: 3059972063262114730}
   m_Layer: 0
   m_Name: LHand (Knife)
-  m_TagString: Untagged
+  m_TagString: left
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5629,9 +5631,9 @@ MonoBehaviour:
   ShootForce: 10
   UpwardForce: 0
   AbilityForce: 10
-  TimeBetweenShooting: 0.25
+  TimeBetweenShooting: 1
   Spread: 2
-  ReloadTime: 1.5
+  ReloadTime: 0.8
   TimeBetweenShots: 0
   MagSize: 160
   BulletsPerTap: 10
@@ -5644,6 +5646,8 @@ MonoBehaviour:
   AttackPoint: {fileID: 2403966700962068073}
   AllowInvoke: 1
   AllowInvokeAbility: 1
+  animationActive: 0
+  animationActiveAbility: 0
   MuzzleFlash: {fileID: 0}
   AmmoDisplay: {fileID: 1118455515}
 --- !u!114 &6316798248692070190
@@ -6553,8 +6557,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pooledObjects: []
-  objectToPool: {fileID: 0}
-  amountToPool: 0
+  objectToPool: {fileID: 6203379121662253678, guid: b17b394757b34cb4ebc272847b8dd469,
+    type: 3}
+  amountToPool: 160
 --- !u!114 &8162365305684670569
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6594,7 +6599,7 @@ GameObject:
   - component: {fileID: 3653977805570555605}
   m_Layer: 0
   m_Name: RHand (Gun)
-  m_TagString: Untagged
+  m_TagString: right
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
