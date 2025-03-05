@@ -18,7 +18,7 @@ namespace NewMovment
         [Header("Sliding")]
         public float maxSlideTime;
         public float slideForce;
-        float slideTimer;
+        private float slideTimer;
 
         public float slideYScale;
         private float StartYScale;
@@ -26,7 +26,8 @@ namespace NewMovment
         private float horizontalInput;
         private float verticalInput;
 
-        private bool sliding;
+        private bool wasSliding;
+
 
 
         void Start()
@@ -35,7 +36,7 @@ namespace NewMovment
             rb = GetComponent<Rigidbody>();
             it = GetComponent<StarterAssetsInputs>();
 
-            StartYScale = PlayerObj.transform.localScale.y;
+            StartYScale = PlayerObj.localScale.y;
         }
 
         void Update()
@@ -43,14 +44,17 @@ namespace NewMovment
             horizontalInput = it.move.x; 
             verticalInput = it.move.y;
 
-            if (it.Slide && (horizontalInput != 0 || verticalInput != 0) && !pm.sliding)
+            if (it.Slide && (horizontalInput != 0 || verticalInput != 0) && !pm.sliding && !wasSliding)
             {
                 StartSlide();
+                wasSliding = true;
             }
             if (!it.Slide && pm.sliding)
             {
                 StopSlide();
+                
             }
+            if(!it.Slide) wasSliding = false;
         }
 
         private void FixedUpdate()
@@ -61,7 +65,10 @@ namespace NewMovment
 
         private void StartSlide()
         {
+            if (pm.wallrunning) return;
+
             pm.sliding = true;
+
             PlayerObj.localScale = new Vector3(PlayerObj.localScale.x, slideYScale, PlayerObj.localScale.z);
             rb.AddForce(Vector3.down * 2f, ForceMode.Impulse);
 
@@ -78,13 +85,13 @@ namespace NewMovment
 
             slideTimer -= Time.deltaTime;
             rb.AddForce(Vector3.down * 5f, ForceMode.Impulse);
+
+
             }
             else
             {
                 rb.AddForce(pm.GetSlopeMoveDirection(inputDir) * slideForce, ForceMode.Force);
-
             }
-
 
             if (slideTimer <= 0)
                 StopSlide();

@@ -20,9 +20,11 @@ namespace player
         public float two = 0.6f;
         public float three = 0.5f;
         public LayerMask LayerMask;
+        Animator anim;
         // Start is called before the first frame update
         void Start()
         {
+            anim = GetComponent<Animator>();
             _input = GetComponent<StarterAssetsInputs>();
         }
 
@@ -39,6 +41,7 @@ namespace player
                 {
                     if (Physics.Raycast(firstHit.point + (cam.transform.forward * playerRadius) + (Vector3.up * two * playerHeight), Vector3.down, out var secondHit, playerHeight))
                     {
+                        if (anim != null) anim.SetTrigger("climb");
                         StartCoroutine(LerpVault(secondHit.point, three));
                     }
                 }

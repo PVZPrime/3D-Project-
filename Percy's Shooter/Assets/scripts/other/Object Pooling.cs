@@ -36,4 +36,18 @@ public class ObjectPooling : MonoBehaviour
         }
         return null;
     }
+    public List<SaveBullet> GetAllActiveBullets()
+    {
+        List<SaveBullet> activeBullets = new List<SaveBullet>();
+
+        foreach (var bullet in pooledObjects)
+        {
+            if (bullet.activeInHierarchy)
+            {
+                activeBullets.Add(bullet.GetComponent<SaveBullet>());
+            }
+        }
+
+        return activeBullets;
+    }
 }

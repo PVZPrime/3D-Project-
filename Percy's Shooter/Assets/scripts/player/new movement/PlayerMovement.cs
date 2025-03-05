@@ -15,6 +15,7 @@ namespace NewMovment
         public float sprintSpeed;
         public float wallRunSpeed;
         public float slideSpeed;
+        public float climbSpeed;
         [Tooltip("The difference in speed of the last way of moving and the current")]
         public float MaxSpeedDifference = 4f;
 
@@ -63,6 +64,7 @@ namespace NewMovment
         Vector3 moveDir;
         Rigidbody rb;
         private StarterAssetsInputs it;
+        private Climbing cs;
         
         public MovementState state;
         public enum MovementState
@@ -70,6 +72,7 @@ namespace NewMovment
             walking,
             sprinting,
             wallrunning,
+            climbing,
             crouching,
             sliding,
             air
@@ -80,9 +83,12 @@ namespace NewMovment
         public bool crouching;
         [HideInInspector]
         public bool wallrunning;
+        [HideInInspector]
+        public bool climbing;
 
         void Start()
         {
+            cs = GetComponent<Climbing>();
             it = GetComponent<StarterAssetsInputs>();
             rb = GetComponent<Rigidbody>();
             rb.freezeRotation = true; 
@@ -139,10 +145,14 @@ namespace NewMovment
         }
         private void StateHandler()
         {
+            if(climbing)
+            {
+                state = MovementState.climbing;
+                desiredMoveSpeed = climbSpeed;
+            }
 
 
-
-            if(sliding)
+            else if(sliding)
             {
                 state = MovementState.sliding;
 
@@ -219,6 +229,9 @@ namespace NewMovment
 
         private void MovePlayer()
         {
+
+            if (cs.exitingWall) return;
+
             moveDir = orientation.forward * verticalInput + orientation.right * horizontalInput;
 
             if(OnSlope() && !ExitingSlope)
