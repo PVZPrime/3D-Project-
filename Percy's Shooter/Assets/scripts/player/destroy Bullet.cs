@@ -1,24 +1,29 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static Unity.Burst.Intrinsics.X86.Avx;
 
 namespace player
 {
     public class DestroyBullet : MonoBehaviour
     {
         public float timeToDestroy = 5f;
-        public float Timer {  get; set; }
-        public bool Active { get; set; }
+        public float Timer;
+        public bool Active;
         void Update()
         {
-            Timer += Time.deltaTime;
-            if (Timer <= timeToDestroy) Active = true;
+            if (Active) Timer += Time.deltaTime;
+            if (Timer <= timeToDestroy && gameObject.GetComponent<MeshRenderer>().enabled == true) Active = true;
+            //add a if statment to activate the compenents if active
             if (Timer >= timeToDestroy)
             {
                 //Destroy(gameObject);
                 gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
                 Active = false;
-                gameObject.SetActive(false);
+
+                gameObject.GetComponent<MeshRenderer>().enabled = false;
+                gameObject.GetComponent<SphereCollider>().enabled = false;
+                //gameObject.SetActive(false);
                 Timer = 0;
             }
         }
