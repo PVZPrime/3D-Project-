@@ -44,6 +44,7 @@ namespace player
         public bool AllowInvoke = true;
         public bool AllowInvokeAbility = true;
         private StarterAssetsInputs _input;
+        Animator anim;
 
         [Header("Graphics")]
         public GameObject MuzzleFlash;
@@ -57,6 +58,7 @@ namespace player
         }
         void Start()
         {
+            anim = GetComponent<Animator>();
             saveCoolDown = TimeBetweenAbilities;
             _input = GetComponent<StarterAssetsInputs>();
         }
@@ -128,7 +130,7 @@ namespace player
 
             BulletsLeft--;
             BulletsShot++;
-
+            if (anim != null) anim.SetTrigger("shoot");
             if (AllowInvoke)
             {
                 //Invoke("ResetShot", 3f); calls function after 3 seconds
@@ -170,7 +172,7 @@ namespace player
 
             BulletsLeft--;
             BulletsShot++;
-
+            if (anim != null) anim.SetTrigger("ability1");
             if (AllowInvokeAbility)
             {
                 if (saveCoolDown == TimeBetweenAbilities)

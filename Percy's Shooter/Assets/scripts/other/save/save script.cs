@@ -8,6 +8,7 @@ public class SaveScript : MonoBehaviour
 {
     string password = "1234567890";
     //CharacterController CC;
+    // add ammo left
     PlayerShoot PS;
     PlayerHealth PH;
     ability2 A2;
@@ -94,6 +95,7 @@ public class PlayerSaveData
     public float y;
     public float z;
     public int Ammo;
+    public int ammoLeft;
     public float health;
     public float Ab1Timer;
     public float Ab2Timer;

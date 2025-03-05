@@ -22,6 +22,7 @@ namespace player
         private StarterAssetsInputs _input;
         private PlayerHealth PlayerHealth;
         private FirstPersonController FPC;
+        Animator anim;
         bool AbilityActive;
         public float Cooldown;
         public float Length { get; set; }
@@ -30,6 +31,7 @@ namespace player
         // Start is called before the first frame update
         void Start()
         {
+            anim = GetComponent<Animator>();
             _input = GetComponent<StarterAssetsInputs>();
             FPC = GetComponent<FirstPersonController>();
             PlayerHealth = GetComponent<PlayerHealth>();
@@ -51,6 +53,7 @@ namespace player
             AbilityActive = _input.Ability2;
             if(_input.Ability2 && time >= 0)
             {
+                if(anim != null)    anim.SetTrigger("ability2");
                 abilityActivated = true;
                 if (Length > 0)
                 {
