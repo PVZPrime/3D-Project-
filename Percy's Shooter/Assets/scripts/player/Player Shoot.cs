@@ -119,6 +119,8 @@ namespace player
             {
                 currentBullet.transform.SetPositionAndRotation(AttackPoint.transform.position, AttackPoint.transform.rotation);
                 currentBullet.SetActive(true);
+                //currentBullet.GetComponent<MeshRenderer>().enabled = true;
+                //currentBullet.GetComponent<SphereCollider>().enabled = true;
 
                 currentBullet.transform.forward = directionWithSpread.normalized;
             }
@@ -167,6 +169,8 @@ namespace player
             {
                 currentBullet.transform.SetPositionAndRotation(AttackPoint.transform.position, AttackPoint.transform.rotation);
                 currentBullet.SetActive(true);
+                //currentBullet.GetComponent<MeshRenderer>().enabled = true;
+                //currentBullet.GetComponent<SphereCollider>().enabled = true;
 
                 currentBullet.transform.forward = directionWithSpread.normalized;
             }
