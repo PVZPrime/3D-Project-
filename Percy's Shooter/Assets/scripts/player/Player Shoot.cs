@@ -15,6 +15,7 @@ namespace player
 #endif
     public class PlayerShoot : MonoBehaviour
     {
+        //fix the shootDir
         [Header("Bullet settings")]
         public float ShootForce;
         public float UpwardForce, AbilityForce;

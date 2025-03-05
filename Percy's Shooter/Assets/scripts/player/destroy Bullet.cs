@@ -14,6 +14,7 @@ namespace player
         {
             if (Active) Timer += Time.deltaTime;
             if (Timer <= timeToDestroy && gameObject.GetComponent<MeshRenderer>().enabled == true) Active = true;
+            //add a if statment to activate the compenents if active
             if (Timer >= timeToDestroy)
             {
                 //Destroy(gameObject);
