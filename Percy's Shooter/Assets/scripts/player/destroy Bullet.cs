@@ -20,9 +20,9 @@ namespace player
                 gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
                 Active = false;
 
-                //gameObject.GetComponent<MeshRenderer>().enabled = false;
-                //gameObject.GetComponent<SphereCollider>().enabled = false;
-                gameObject.SetActive(false);
+                gameObject.GetComponent<MeshRenderer>().enabled = false;
+                gameObject.GetComponent<SphereCollider>().enabled = false;
+                //gameObject.SetActive(false);
                 Timer = 0;
             }
         }
