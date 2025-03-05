@@ -1,3 +1,4 @@
+using NewMovment;
 using StarterAssets;
 using System.Collections;
 using System.Collections.Generic;
@@ -21,22 +22,22 @@ namespace player
         float BasePlayerRegenAmount;
         private StarterAssetsInputs _input;
         private PlayerHealth PlayerHealth;
-        private FirstPersonController FPC;
+        private PlayerMovement PM;
         Animator anim;
-        bool AbilityActive;
         public float Cooldown;
         public float Length { get; set; }
         public float time { get; set; }
         bool abilityActivated;
+        bool trigger;
         // Start is called before the first frame update
         void Start()
         {
-            anim = GetComponent<Animator>();
+            anim = GameObject.FindGameObjectWithTag("left").GetComponent<Animator>();
             _input = GetComponent<StarterAssetsInputs>();
-            FPC = GetComponent<FirstPersonController>();
+            PM = GetComponent<PlayerMovement>();
             PlayerHealth = GetComponent<PlayerHealth>();
-            BasePlayerSpeed = FPC.MoveSpeed;
-            BasePlayerSprintSpeed = FPC.SprintSpeed;
+            BasePlayerSpeed = PM.walkSpeed;
+            BasePlayerSprintSpeed = PM.sprintSpeed;
             BasePlayerRegenAmount = PlayerHealth.RegenAmount;
             Length = Cooldown / 2;
             time = Cooldown;
@@ -50,15 +51,18 @@ namespace player
                 time -= Time.deltaTime;
                 Length -= Time.deltaTime;
             }
-            AbilityActive = _input.Ability2;
             if(_input.Ability2 && time >= 0)
             {
-                if(anim != null)    anim.SetTrigger("ability2");
                 abilityActivated = true;
                 if (Length > 0)
                 {
-                    FPC.MoveSpeed = PlayerSpeedBuffed;
-                    FPC.SprintSpeed = PlayerSprintSpeedBuffed;
+                    if (anim != null && !trigger)
+                    {
+                        trigger = true;
+                        anim.SetTrigger("ability2");
+                    }
+                    PM.walkSpeed = PlayerSpeedBuffed;
+                    PM.sprintSpeed = PlayerSprintSpeedBuffed;
                     PlayerHealth.RegenAmount = PlayerRegenAmountBuffed;
                 }
             }
@@ -70,9 +74,10 @@ namespace player
             }
                 if (Length <= 0)
                 {
-                    FPC.MoveSpeed = BasePlayerSpeed;
-                    FPC.SprintSpeed = BasePlayerSprintSpeed;
+                    PM.walkSpeed = BasePlayerSpeed;
+                    PM.sprintSpeed = BasePlayerSprintSpeed;
                     PlayerHealth.RegenAmount = BasePlayerRegenAmount;
+                    trigger = false;
                 }
         }
     }

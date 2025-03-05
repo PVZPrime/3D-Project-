@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class ObjectPooling : MonoBehaviour
@@ -8,10 +9,14 @@ public class ObjectPooling : MonoBehaviour
     public List<GameObject> pooledObjects;
     public GameObject objectToPool;
     public int amountToPool;
+    public Transform parentTransform;
+
+    private int lastUsedIndex = -1;
 
     void Awake()
     {
         SharedInstance = this;
+        parentTransform = transform;
     }
 
     void Start()
@@ -20,34 +25,25 @@ public class ObjectPooling : MonoBehaviour
         GameObject tmp;
         for (int i = 0; i < amountToPool; i++)
         {
-            tmp = Instantiate(objectToPool);
-            tmp.SetActive(false);
+            tmp = Instantiate(objectToPool, parentTransform != null ? parentTransform : this.transform);
+            tmp.GetComponent<MeshRenderer>().enabled = false;
+            tmp.GetComponent<SphereCollider>().enabled = false;
+            //tmp.SetActive(false);
             pooledObjects.Add(tmp);
         }
     }
     public GameObject GetPooledObject()
     {
+        int startIndex = (lastUsedIndex + 1) % amountToPool; // Move to the next object in the pool
         for (int i = 0; i < amountToPool; i++)
         {
-            if (!pooledObjects[i].activeInHierarchy)
+            int currentIndex = (startIndex + i) % amountToPool;
+            if (pooledObjects[currentIndex].activeInHierarchy)
             {
-                return pooledObjects[i];
+                lastUsedIndex = currentIndex; // Update last used index
+                return pooledObjects[currentIndex];
             }
         }
         return null;
-    }
-    public List<SaveBullet> GetAllActiveBullets()
-    {
-        List<SaveBullet> activeBullets = new List<SaveBullet>();
-
-        foreach (var bullet in pooledObjects)
-        {
-            if (bullet.activeInHierarchy)
-            {
-                activeBullets.Add(bullet.GetComponent<SaveBullet>());
-            }
-        }
-
-        return activeBullets;
     }
 }
