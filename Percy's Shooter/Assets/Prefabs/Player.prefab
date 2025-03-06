@@ -95,7 +95,7 @@ GameObject:
   - component: {fileID: 2140565327120669844}
   - component: {fileID: 8539830444423607909}
   - component: {fileID: 3055136862200938542}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Capsule
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1740,8 +1740,8 @@ MonoBehaviour:
   ShootForce: 300
   UpwardForce: 0
   AbilityForce: 300
-  TimeBetweenShooting: 0.25
-  Spread: 2
+  TimeBetweenShooting: 1
+  Spread: 1
   ReloadTime: 1.5
   TimeBetweenShots: 0
   MagSize: 160
@@ -1973,9 +1973,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4649779460114468433}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
