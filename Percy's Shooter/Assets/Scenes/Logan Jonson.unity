@@ -1023,6 +1023,7 @@ GameObject:
   - component: {fileID: 658231695}
   - component: {fileID: 658231701}
   - component: {fileID: 658231702}
+  - component: {fileID: 658231703}
   m_Layer: 8
   m_Name: Capsule
   m_TagString: Enemy
@@ -1209,6 +1210,18 @@ MonoBehaviour:
   DropAllInList: 1
   DropSpecificAmount: 0
   DropAttemptAmount: 10
+--- !u!114 &658231703
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 658231694}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d485e2505bdae64ab0649299b8804bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &759520627
 GameObject:
   m_ObjectHideFlags: 0
@@ -7406,6 +7419,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: zombie
+      objectReference: {fileID: 0}
+    - target: {fileID: 7562132592913981427, guid: ba5024702595a4c428098c3c4e502f09,
+        type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
