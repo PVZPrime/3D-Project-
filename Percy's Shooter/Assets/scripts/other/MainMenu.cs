@@ -7,6 +7,7 @@ public class MainMenu : MonoBehaviour
 {
     [SerializeField]
     string levelToLoad = "Level 1";
+    public string MainMenu1 = "Start Menu";
     public void StartGame()
     {
         SceneManager.LoadScene(levelToLoad);
@@ -15,5 +16,9 @@ public class MainMenu : MonoBehaviour
     public void QuitGame()
     {
         Application.Quit();
+    }
+    public void QuitToMenu()
+    {
+        SceneManager.LoadScene(MainMenu1);
     }
 }
