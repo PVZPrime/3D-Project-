@@ -23,7 +23,6 @@ public class PlayerSceneTransfer : MonoBehaviour
         {
             OriginalPlayer = true;
         }
-        menu = GameObject.FindGameObjectWithTag("menu");
         if (menu != null)
         {
             GameObject.FindGameObjectWithTag("Player").SetActive(false);
@@ -43,7 +42,7 @@ public class PlayerSceneTransfer : MonoBehaviour
                 DontDestroyOnLoad(this.gameObject);
             }
         SpawnPos = GameObject.FindGameObjectWithTag("Scene Start Point");
-        gameObject.transform.position = SpawnPos.transform.position;
+        if (SpawnPos != null)gameObject.transform.position = SpawnPos.transform.position;
     }
     private void OnLevelWasLoaded(int level)
     {

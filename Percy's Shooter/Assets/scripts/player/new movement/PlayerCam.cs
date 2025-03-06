@@ -17,12 +17,21 @@ namespace NewMovment
         float xRotation;
         float yRotation;
         private StarterAssetsInputs _input;
+        public GameObject menu;
 
         private void Start()
         {
+            menu = GameObject.FindGameObjectWithTag("menu");
             _input = GameObject.FindGameObjectWithTag("Player").GetComponent<StarterAssetsInputs>();
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
+            if (menu == null)
+            {
+                Cursor.lockState = CursorLockMode.Locked;
+                Cursor.visible = false;
+            }
+            else
+            {
+                Cursor.visible = true;
+            }
         }
         private void Update()
         {

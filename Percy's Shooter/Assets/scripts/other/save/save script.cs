@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 using player;
+using UnityEngine.SceneManagement;
 
 public class SaveScript : MonoBehaviour
 {
@@ -34,6 +35,7 @@ public class SaveScript : MonoBehaviour
         myData.Ab2TimeLeft = A2.Length;
         myData.Ab1TimerActive = PS.SaveCoolDownActive;
         myData.PSReload = PS.Reloading;
+        myData.SceneName = SceneManager.GetActiveScene().name;
         string myDataString = JsonUtility.ToJson(myData);
         myDataString = EncryptDecryptData(myDataString);
         //Debug.Log(myDataString);
@@ -59,6 +61,7 @@ public class SaveScript : MonoBehaviour
             A2.Length = myData.Ab2TimeLeft;
             PS.SaveCoolDownActive = myData.Ab1TimerActive;
             PS.Reloading = myData.PSReload;
+            SceneManager.LoadScene(myData.SceneName);
 
             //string myData = File.ReadAllText(file);
             //myData = EncryptDecryptData(myData);
@@ -90,4 +93,5 @@ public class PlayerSaveData
     public float Ab2TimeLeft;
     public bool Ab1TimerActive;
     public bool PSReload;
+    public string SceneName;
 }

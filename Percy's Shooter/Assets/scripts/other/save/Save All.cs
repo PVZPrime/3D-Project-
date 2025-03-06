@@ -23,18 +23,6 @@ namespace player
                 Enemy.Add(go);
             }
         }
-
-        private void Update()
-        {
-            if (Input.GetKeyDown(KeyCode.Alpha4))
-            {
-                Save();
-            }
-            if (Input.GetKeyDown(KeyCode.Alpha5))
-            {
-                Load();
-            }
-        }
         public void Save()
         {
             //foreach (GameObject go in GameObject.FindGameObjectsWithTag("Bullet"))
