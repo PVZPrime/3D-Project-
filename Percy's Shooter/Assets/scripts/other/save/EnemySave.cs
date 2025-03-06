@@ -9,8 +9,14 @@ public class EnemySave : MonoBehaviour
 {
     string password = "1234567890";
     EnemyHP EH;
+    EnemyAi EA;
+    EnemyAiMelee EAM;
+    Vector3 walkEA;
+    Vector3 walkEAM;
     void Start()
     {
+        EA = GetComponent<EnemyAi>();
+        EAM = GetComponent<EnemyAiMelee>();
         EH = GetComponent<EnemyHP>();
     }
     public void Save()
@@ -21,6 +27,12 @@ public class EnemySave : MonoBehaviour
         myData.x = transform.position.x;
         myData.y = transform.position.y;
         myData.z = transform.position.z;
+        if(EA != null) myData.walkxEA = EA.walkPoint.x;
+        if(EA != null) myData.walkyEA = EA.walkPoint.y;
+        if(EA != null) myData.walkzEA = EA.walkPoint.z;
+        if(EAM != null) myData.walkx = EAM.walkPoint.x;
+        if(EAM != null) myData.walky = EAM.walkPoint.y;
+        if(EAM != null) myData.walkz = EAM.walkPoint.z;
         myData.health = EH.health;
         myData.active = EH.EnemyDead;
         string myDataString = JsonUtility.ToJson(myData);
@@ -39,6 +51,8 @@ public class EnemySave : MonoBehaviour
             jsonData = EncryptDecryptData(jsonData);
             EnemySaveData myData = JsonUtility.FromJson<EnemySaveData>(jsonData);
             transform.position = new Vector3(myData.x, myData.y, myData.z);
+            if (EA != null) EA.walkPoint = new Vector3(myData.walkxEA, myData.walkyEA, myData.walkzEA);
+            if (EAM != null) EAM.walkPoint = new Vector3(myData.walkx, myData.walky, myData.walkz);
             EH.health = myData.health;
             EH.EnemyDead = myData.active;
 
@@ -64,6 +78,12 @@ public class EnemySaveData
     public float x;
     public float y;
     public float z;
+    public float walkx;
+    public float walky;
+    public float walkz;
+    public float walkxEA;
+    public float walkyEA;
+    public float walkzEA;
     public float health;
     public bool active;
 }

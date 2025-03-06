@@ -41,17 +41,33 @@ namespace player
             //{
             //    //go.GetComponent<SaveBullet>().Save();
             //}
-            foreach (GameObject go in GameObject.FindGameObjectsWithTag("Enemy"))
+            foreach (GameObject go in Enemy)
             {
-                //go.GetComponent<SaveScript>().Save();
+                var enemySave = go.GetComponent<EnemySave>();
+                if (enemySave != null)
+                {
+                    enemySave.Save();
+                }
+                else
+                {
+                    Debug.LogWarning($"EnemySave component not found on {go.name}");
+                }
             }
             GameObject.FindGameObjectWithTag("Player").GetComponent<SaveScript>().Save();
         }
         public void Load()
         {
-            foreach (GameObject go in GameObject.FindGameObjectsWithTag("Enemy"))
+            foreach (GameObject go in Enemy)
             {
-                go.GetComponent<EnemySave>().Save();
+                var enemySave = go.GetComponent<EnemySave>();
+                if (enemySave != null)
+                {
+                    enemySave.Load();
+                }
+                else
+                {
+                    Debug.LogWarning($"EnemySave component not found on {go.name}");
+                }
             }
             //foreach (GameObject go in GameObject.FindGameObjectsWithTag("Bullet"))
             //{

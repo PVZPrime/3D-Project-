@@ -11,7 +11,8 @@ namespace player
 #if ENABLE_INPUT_SYSTEM
     [RequireComponent(typeof(PlayerInput))]
 #endif
-
+    //String.Format("{0:0.00}", value);
+    //use this to show cooldown
     public class ability2 : MonoBehaviour
     {
         public float PlayerSpeedBuffed;
