@@ -1602,6 +1602,29 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1784440842713211952}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &4105671971862461368 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 85108378180400059, guid: 1e7866ac2c5549647805781db70fa206,
+    type: 3}
+  m_PrefabInstance: {fileID: 5848344539149985240}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &4105671971862461374
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4105671971862461368}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a101d4d30a2ce841b0476f86d84255c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 2
+  ImunityTime: 0.25
+  EnemyDead: 0
+  boss: 1
+  LoadLevel: 
 --- !u!4 &4501489468349107174
 Transform:
   m_ObjectHideFlags: 0
@@ -1924,6 +1947,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: peter
       objectReference: {fileID: 0}
+    - target: {fileID: 85108378180400059, guid: 1e7866ac2c5549647805781db70fa206,
+        type: 3}
+      propertyPath: m_TagString
+      value: Enemy
+      objectReference: {fileID: 0}
     - target: {fileID: 7105380012475537239, guid: 1e7866ac2c5549647805781db70fa206,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1977,7 +2005,11 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 85108378180400059, guid: 1e7866ac2c5549647805781db70fa206,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4105671971862461374}
   m_SourcePrefab: {fileID: 100100000, guid: 1e7866ac2c5549647805781db70fa206, type: 3}
 --- !u!114 &6049837234685522733
 MonoBehaviour:
