@@ -1741,7 +1741,7 @@ MonoBehaviour:
   UpwardForce: 0
   AbilityForce: 300
   TimeBetweenShooting: 1
-  Spread: 1
+  Spread: 0.5
   ReloadTime: 1.5
   TimeBetweenShots: 0
   MagSize: 160
@@ -1766,7 +1766,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7372842121782711712}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: eadd8be361eef974b8affaaf8362c9db, type: 3}
   m_Name: 
@@ -1775,10 +1775,10 @@ MonoBehaviour:
   firstAttack: 1
   time: 0
   timer: 0
-  ImunityTime: 0.25
+  ImunityTime: 1
   healthbar: {fileID: 0}
-  RegenAmount: 3
-  RegenDelay: 1
+  RegenAmount: 1
+  RegenDelay: 3
   damageTaken: 2
 --- !u!114 &5300486020464588839
 MonoBehaviour:
