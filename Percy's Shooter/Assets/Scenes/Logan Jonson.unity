@@ -1222,6 +1222,54 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d485e2505bdae64ab0649299b8804bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &661914501
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 661914503}
+  - component: {fileID: 661914504}
+  m_Layer: 0
+  m_Name: PlayerSetUp
+  m_TagString: Player2
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &661914503
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 661914501}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 34.94187, y: 2.5282857, z: 52.53495}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 3102827631001458660}
+  - {fileID: 127963445075829639}
+  - {fileID: 1040535879}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &661914504
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 661914501}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14fe6478a34a04d43bc25ee65cb96350, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OriginalPlayer: 0
 --- !u!1 &759520627
 GameObject:
   m_ObjectHideFlags: 0
@@ -1770,7 +1818,7 @@ RectTransform:
   - {fileID: 141090859}
   - {fileID: 473927242}
   - {fileID: 1502203879}
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 661914503}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -2791,12 +2839,12 @@ Transform:
   m_GameObject: {fileID: 7010610815613491453}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 12.229767, y: 5.886999, z: 50}
+  m_LocalPosition: {x: -22.712105, y: 3.3587134, z: -2.5349503}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3838836310324378740}
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 661914503}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!23 &184878376253427667
 MeshRenderer:
@@ -3870,8 +3918,8 @@ MonoBehaviour:
   timer: 0
   ImunityTime: 1
   healthbar: {fileID: 141090860}
-  RegenAmount: 3
-  RegenDelay: 1
+  RegenAmount: 1
+  RegenDelay: 10
   damageTaken: 2
 --- !u!1 &1970216792650933355
 GameObject:
@@ -4438,7 +4486,7 @@ Transform:
   m_GameObject: {fileID: 6607402616795782583}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 32, y: 4, z: 50}
+  m_LocalPosition: {x: -2.9418716, y: 1.4717143, z: -2.5349503}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -4446,7 +4494,7 @@ Transform:
   - {fileID: 353723077221122950}
   - {fileID: 946770238188081769}
   - {fileID: 1000526669}
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 661914503}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &3110290635300438228
 Transform:
@@ -6792,7 +6840,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52ac82be860d2e64ca8ff9e3736a7d8b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ObjectiveText: {fileID: 0}
+  ObjectiveText: {fileID: 473927243}
   Level1: Streets Of London
   Level2: Sewers Of London
   Level3: BigBenLevel
@@ -7200,7 +7248,7 @@ PrefabInstance:
     - target: {fileID: 1622918775306328408, guid: a7e30734cf3d1384da565aa2dc169d7a,
         type: 3}
       propertyPath: m_Name
-      value: Canvas
+      value: Pause
       objectReference: {fileID: 0}
     - target: {fileID: 1622918775306328408, guid: a7e30734cf3d1384da565aa2dc169d7a,
         type: 3}
@@ -7420,11 +7468,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: zombie
       objectReference: {fileID: 0}
-    - target: {fileID: 7562132592913981427, guid: ba5024702595a4c428098c3c4e502f09,
-        type: 3}
-      propertyPath: m_TagString
-      value: Untagged
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -7439,8 +7482,8 @@ SceneRoots:
   - {fileID: 1269260814}
   - {fileID: 832575519}
   - {fileID: 787644907}
-  - {fileID: 8853978200473659391}
   - {fileID: 1274585023}
+  - {fileID: 8853978200473659391}
   - {fileID: 2568676492286220708}
   - {fileID: 149925450}
   - {fileID: 658231700}
@@ -7452,8 +7495,6 @@ SceneRoots:
   - {fileID: 1272555233}
   - {fileID: 361006192}
   - {fileID: 1191975647}
-  - {fileID: 1040535879}
-  - {fileID: 3102827631001458660}
-  - {fileID: 127963445075829639}
   - {fileID: 8151818993379772987}
   - {fileID: 9182219296848733474}
+  - {fileID: 661914503}

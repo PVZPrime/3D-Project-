@@ -21,7 +21,7 @@ namespace Enemy
         bool alreadyAttacked;
 
         public float sightRange, attackRange, meleeAttackRange, ForwardForce, UpwardForce;
-        public bool playerInSightRange, playerInAttackRange, playerInMeleeAttackRange, meleeAttack,lookAtPlayer;
+        public bool playerInSightRange, playerInAttackRange, playerInMeleeAttackRange, meleeAttack,lookAtPlayer,walks;
         public GameObject Bullet;
         private void Awake()
         {
@@ -35,8 +35,8 @@ namespace Enemy
             playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, whatIsPlayer);
             playerInMeleeAttackRange = Physics.CheckSphere(transform.position, meleeAttackRange, whatIsPlayer);
 
-            if (!playerInSightRange && !playerInAttackRange) Patroling();
-            if (playerInSightRange && !playerInAttackRange) ChasePlayer();
+            if (!playerInSightRange && !playerInAttackRange && walks) Patroling();
+            if (playerInSightRange && !playerInAttackRange && walks) ChasePlayer();
             if (playerInSightRange && playerInAttackRange && !meleeAttack) AttackPlayer();
             else if (playerInSightRange && playerInMeleeAttackRange && meleeAttack) MeleeAttack();
 
@@ -71,6 +71,7 @@ namespace Enemy
 
         private void AttackPlayer()
         {
+            if(walks)
             agent.SetDestination(transform.position);
 
             if (lookAtPlayer) transform.LookAt(Player);

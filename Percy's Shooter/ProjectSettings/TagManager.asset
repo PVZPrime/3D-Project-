@@ -13,6 +13,9 @@ TagManager:
   - right
   - left
   - Interactable
+  - Scene Start Point
+  - menu
+  - Player2
   layers:
   - Default
   - TransparentFX

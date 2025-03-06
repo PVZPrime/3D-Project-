@@ -21,7 +21,7 @@ namespace Enemy
         public float walkPointRange;
 
         public float timeBetweenAttacks;
-        bool alreadyAttacked, meleeAttack;
+        bool alreadyAttacked;
         
         public int damageAmount;
         public float sightRange, attackRange;
@@ -80,7 +80,6 @@ namespace Enemy
             agent.SetDestination(transform.position + new Vector3(0f, 1f, 0f));
 
             if(lookAtPlayer)transform.LookAt(Player);
-            meleeAttack = true;
             if(!alreadyAttacked)
             {
                 anim.SetTrigger("attack");
@@ -93,7 +92,6 @@ namespace Enemy
         private void ResetAttack()
         {
             alreadyAttacked = false;
-            meleeAttack = false;
         }
         private void OnDrawGizmosSelected()
         {

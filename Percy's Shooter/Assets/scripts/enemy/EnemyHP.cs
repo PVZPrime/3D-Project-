@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace Enemy
@@ -16,8 +17,8 @@ namespace Enemy
         float ImunityTime = 0.25f;
         //Image healthbar;
         //GameObject player;
-        public int experianceAmount;
-        public bool EnemyDead;
+        public bool EnemyDead, boss;
+        public string LoadLevel;
         CapsuleCollider CC;
         SphereCollider SC;
         NavMeshAgent NMA;
@@ -52,9 +53,9 @@ namespace Enemy
             if (EnemyDead)
             {
                 if (MR != null) MR.enabled = false;
-                CC.enabled = false;
+                if (CC != null) CC.enabled = false;
                 if (SC != null) SC.enabled = false;
-                NMA.enabled = false;
+                if (NMA != null) NMA.enabled = false;
                 if (EAM != null) EAM.enabled = false;
                 if (EA != null) EA.enabled = false;
                 if(rb != null) rb.useGravity = false;
@@ -62,9 +63,9 @@ namespace Enemy
             else
             {
                 if (MR != null) MR.enabled = true;
-                CC.enabled = true;
+                if (CC != null) CC.enabled = true;
                 if(SC != null) SC.enabled = true;
-                NMA.enabled = true;
+                if (NMA != null) NMA.enabled = true;
                 if (EAM != null) EAM.enabled = true;
                 if (EA != null) EA.enabled = true;
                 if (rb != null) rb.useGravity = true;
@@ -93,12 +94,16 @@ namespace Enemy
                 //healthbar.fillAmount = health / MaxHealth;
                 if (health <= 0)
                 {
+                    if(boss)
+                    {
+                        SceneManager.LoadScene(LoadLevel);
+                    }
                     //player.GetComponent<XpScript>().GiveXP(experianceAmount);
-                    GetComponent<LootDropChance>().InstantiateLoot(transform.position);
+                    if(GetComponent<LootDropChance>() != null) GetComponent<LootDropChance>().InstantiateLoot(transform.position);
                     time = 0;
-                    CC.enabled = false;
+                    if (CC != null) CC.enabled = false;
                     if (SC != null) gameObject.GetComponent<SphereCollider>().enabled = false;
-                    NMA.enabled = false;
+                    if (NMA != null) NMA.enabled = false;
                     if(EAM != null)EAM.enabled = false;
                     if (EA != null) EA.enabled = false;
                     if (MR != null) MR.enabled = false;
