@@ -1,10 +1,13 @@
 using NewMovment;
 using StarterAssets;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using static UnityEngine.Rendering.DebugUI;
 
 namespace player
 {
@@ -25,6 +28,7 @@ namespace player
         private PlayerHealth PlayerHealth;
         private PlayerMovement PM;
         Animator anim;
+        public TextMeshProUGUI CoolDownCounter;
         public float Cooldown;
         public float Length { get; set; }
         public float time { get; set; }
@@ -47,6 +51,7 @@ namespace player
         // Update is called once per frame
         void Update()
         {
+            CoolDownCounter.SetText(String.Format("{0:0.00}", time));
             if (abilityActivated)
             {
                 time -= Time.deltaTime;

@@ -1,4 +1,5 @@
 using StarterAssets;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -6,6 +7,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Windows;
+using Random = UnityEngine.Random;
 
 namespace player
 {
@@ -40,6 +42,7 @@ namespace player
         [Header("Referance Objects")]
         public Camera Cam;
         public Transform AttackPoint;
+        public TextMeshProUGUI CoolDownCounter;
 
         [Header("Debuging")]
         public bool AllowInvoke = true;
@@ -63,11 +66,13 @@ namespace player
         {
             anim = GameObject.FindGameObjectWithTag("right").GetComponent<Animator>();
             saveCoolDown = TimeBetweenAbilities;
+
             _input = GetComponent<StarterAssetsInputs>();
         }
 
         void Update()
         {
+            CoolDownCounter.SetText(String.Format("{0:0.00}", saveCoolDown));
             MyInput();
             if (AmmoDisplay != null)
                 AmmoDisplay.SetText(BulletsLeft / BulletsPerTap + " / " + BulletsAvalible / BulletsPerTap);
