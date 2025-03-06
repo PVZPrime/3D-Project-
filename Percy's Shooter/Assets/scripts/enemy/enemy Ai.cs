@@ -7,7 +7,7 @@ using UnityEngine.AI;
 //https://www.youtube.com/watch?v=UjkSFoLxesw
 namespace Enemy
 {
-    public class enemyAi : MonoBehaviour
+    public class EnemyAi : MonoBehaviour
     {
         public NavMeshAgent agent;
         public Transform Player;
@@ -21,7 +21,7 @@ namespace Enemy
         bool alreadyAttacked;
 
         public float sightRange, attackRange, meleeAttackRange, ForwardForce, UpwardForce;
-        public bool playerInSightRange, playerInAttackRange, playerInMeleeAttackRange, meleeAttack;
+        public bool playerInSightRange, playerInAttackRange, playerInMeleeAttackRange, meleeAttack,lookAtPlayer;
         public GameObject Bullet;
         private void Awake()
         {
@@ -73,7 +73,7 @@ namespace Enemy
         {
             agent.SetDestination(transform.position);
 
-            transform.LookAt(Player);
+            if (lookAtPlayer) transform.LookAt(Player);
 
             if(!alreadyAttacked)
             {

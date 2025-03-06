@@ -12,26 +12,17 @@ public class SaveBullet : MonoBehaviour
     {
         DB = GetComponent<DestroyBullet>();
     }
-
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Alpha4))
-        {
-            Save();
-        }
-        if (Input.GetKeyUp(KeyCode.Alpha5))
-        {
-            Load();
-        }
-    }
     public void Save()
     {
         //string result = EncryptDecryptData("a");
         //Debug.Log(result);
         BulletSaveData myData = new BulletSaveData();
-        myData.x = transform.position.x;
-        myData.y = transform.position.y;
-        myData.z = transform.position.z;
+        myData.x = gameObject.transform.position.x;
+        myData.y = gameObject.transform.position.y;
+        myData.z = gameObject.transform.position.z;
+        myData.xVel = gameObject.GetComponent<Rigidbody>().velocity.x;
+        myData.yVel = gameObject.GetComponent<Rigidbody>().velocity.y;
+        myData.zVel = gameObject.GetComponent<Rigidbody>().velocity.z;
         myData.wasShot = DB.Active;
         myData.TimeLeft = DB.Timer;
 
@@ -50,7 +41,37 @@ public class SaveBullet : MonoBehaviour
             string jsonData = File.ReadAllText(file);
             jsonData = EncryptDecryptData(jsonData);
             BulletSaveData myData = JsonUtility.FromJson<BulletSaveData>(jsonData);
-            transform.position = new Vector3(myData.x, myData.y, myData.z);
+            GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerShoot>().enabled = false;
+            Debug.Log($"Loaded Bullet Data: Position ({myData.x}, {myData.y}, {myData.z}), Velocity ({myData.xVel}, {myData.yVel}, {myData.zVel})");
+
+            // Get the Rigidbody
+            Rigidbody rb = gameObject.GetComponent<Rigidbody>();
+
+            // Ensure no forces are acting on the Rigidbody during position change
+            rb.isKinematic = true; // Temporarily disable physics for manual position change
+
+            // Check for parent object (to avoid issues with localPosition vs worldPosition)
+            if (gameObject.transform.parent != null)
+            {
+                // If the object has a parent, update the local position (relative to parent)
+                gameObject.transform.localPosition = new Vector3(myData.x, myData.y, myData.z);
+            }
+            else
+            {
+                // Set the world position directly
+                gameObject.transform.position = new Vector3(myData.x, myData.y, myData.z);
+            }
+
+            // Restore kinematic state of the Rigidbody
+            rb.isKinematic = false;
+            // Set the velocity only if the Rigidbody is non-kinematic
+            if (!rb.isKinematic)
+            {
+                rb.velocity = new Vector3(myData.xVel, myData.yVel, myData.zVel);
+            }
+
+
+            GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerShoot>().enabled = true;
             DB.Active = myData.wasShot;
             DB.Timer = myData.TimeLeft;
 
@@ -76,6 +97,9 @@ public class BulletSaveData
     public float x;
     public float y;
     public float z;
+    public float xVel;
+    public float yVel;
+    public float zVel;
     public float TimeLeft;
     public bool wasShot;
 }

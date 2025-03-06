@@ -150,6 +150,9 @@ MonoBehaviour:
   timeToDestroy: 1
   Timer: 0
   Active: 0
+  damage: 2
+  onPlayer: 1
+  onEnemy: 0
 --- !u!114 &-5146698445598407386
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -157,7 +160,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6203379121662253678}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c395759da6e1da64b86270585a39896c, type: 3}
   m_Name: 

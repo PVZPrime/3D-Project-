@@ -12,44 +12,68 @@ namespace player
     {
         public float health = 2;
         float MaxHealth;
-        float time;
-        float timer;
+        public bool firstAttack = true;
+        public float time;
+        public float timer;
         public float ImunityTime = 0.25f;
         public Image healthbar;
         public float RegenAmount;
         public float RegenDelay;
+        public int damageTaken = 2;
         // Start is called before the first frame update
         void Start()
         {
             MaxHealth = health;
             if(healthbar != null ) healthbar.fillAmount = health / MaxHealth;
+            firstAttack = true;
         }
 
         // Update is called once per frame
-        void Update()
+        void FixedUpdate()
         {
-            time += Time.deltaTime;
-            timer = Time.deltaTime;
-            if(timer >= RegenDelay)
+            time -= Time.deltaTime;
+            timer -= Time.deltaTime;
+            if(timer <= 0 && health != MaxHealth)
             {
                 health += RegenAmount;
+                if (healthbar != null) healthbar.fillAmount = health / MaxHealth;
+                if (timer <= 0) timer = RegenDelay;
             }
             if (health > MaxHealth)
             {
                 health = MaxHealth;
             }
+            if (time <= -3 && !firstAttack) time = ImunityTime;
+            if (timer <= -3) timer = RegenDelay;
         }
         public void TakeDamage(int damage)
         {
-            if (time >= ImunityTime)
+            if (time <= 0)
             {
                 health -= damage;
                 if (healthbar != null) healthbar.fillAmount = health / MaxHealth;
                 if (health <= 0)
                 {
-                    
+                    SceneManager.LoadScene(SceneManager.GetActiveScene().name);
                 }
-                time = 0;
+                time = ImunityTime;
+            }
+        }
+        private void OnTriggerStay(Collider coll)
+        {
+            
+            if (coll.gameObject.CompareTag("Enemy"))
+            {
+                    TakeDamage(damageTaken);
+                firstAttack = false;
+            }
+        }
+        private void OnTriggerEnter(Collider coll)
+        {
+            if (coll.gameObject.CompareTag("Enemy"))
+            {
+                TakeDamage(damageTaken);
+                firstAttack = false;
             }
         }
     }

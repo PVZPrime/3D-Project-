@@ -9,7 +9,7 @@ using UnityEngine.AI;
 //https://www.youtube.com/watch?v=UjkSFoLxesw
 namespace Enemy
 {
-    public class enemyAiMelee : MonoBehaviour
+    public class EnemyAiMelee : MonoBehaviour
     {
         public NavMeshAgent agent;
         public Transform Player;
@@ -21,24 +21,23 @@ namespace Enemy
         public float walkPointRange;
 
         public float timeBetweenAttacks;
-        bool alreadyAttacked;
+        bool alreadyAttacked, meleeAttack;
         
         public int damageAmount;
-        public float sightRange, attackRange, meleeAttackRange, ForwardForce, UpwardForce;
-        public bool playerInSightRange, playerInAttackRange, playerInMeleeAttackRange;
-        public GameObject Bullet;
+        public float sightRange, attackRange;
+        public bool playerInSightRange, playerInAttackRange, lookAtPlayer;
         private void Awake()
         {
             anim = GetComponent<Animator>();
             Player = GameObject.FindGameObjectWithTag("Player").transform;
             agent = GetComponent<NavMeshAgent>();
+            anim.SetBool("walk", true);
         }
 
         private void Update()
         {
-            playerInSightRange = Physics.CheckSphere(transform.position, sightRange, whatIsPlayer);
-            playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, whatIsPlayer);
-            playerInMeleeAttackRange = Physics.CheckSphere(transform.position, meleeAttackRange, whatIsPlayer);
+            playerInSightRange = Physics.CheckSphere(transform.position , sightRange, whatIsPlayer);
+            playerInAttackRange = Physics.CheckSphere(transform.position , attackRange, whatIsPlayer);
 
             if (!playerInSightRange && !playerInAttackRange) Patroling();
             if (playerInSightRange && !playerInAttackRange) ChasePlayer();
@@ -48,12 +47,13 @@ namespace Enemy
 
         private void Patroling()
         {
+            anim.SetBool("walk", true);
             if (!walkPointSet) SearchWalkPoint();
 
             if (walkPointSet)
                 agent.SetDestination(walkPoint);
 
-            Vector3 distanceToWalkPoint = transform.position - walkPoint;
+            Vector3 distanceToWalkPoint = transform.position + new Vector3(0f, 1f, 0f) - walkPoint;
             if(distanceToWalkPoint.magnitude < 1f)
                 walkPointSet = false;
         }
@@ -62,7 +62,7 @@ namespace Enemy
             float randomZ = Random.Range(-walkPointRange, walkPointRange);
             float randomX = Random.Range(-walkPointRange, walkPointRange);
 
-            walkPoint = new Vector3(transform.position.x + randomX, transform.position.y, transform.position.z + randomZ);
+            walkPoint = new Vector3(transform.position.x + randomX, transform.position.y + 1f, transform.position.z + randomZ);
 
             if (Physics.Raycast(walkPoint, - transform.up, 2f, whatIsGround))
             walkPointSet = true;
@@ -70,15 +70,17 @@ namespace Enemy
         
         private void ChasePlayer()
         {
+            anim.SetBool("walk", true);
             agent.SetDestination(Player.position);
         }
 
         private void AttackPlayer()
         {
-            agent.SetDestination(transform.position);
+            anim.SetBool("walk", false);
+            agent.SetDestination(transform.position + new Vector3(0f, 1f, 0f));
 
-            transform.LookAt(Player);
-
+            if(lookAtPlayer)transform.LookAt(Player);
+            meleeAttack = true;
             if(!alreadyAttacked)
             {
                 anim.SetTrigger("attack");
@@ -91,17 +93,15 @@ namespace Enemy
         private void ResetAttack()
         {
             alreadyAttacked = false;
+            meleeAttack = false;
         }
         private void OnDrawGizmosSelected()
         {
             Gizmos.color = Color.red;
-            Gizmos.DrawWireSphere(transform.position, attackRange);
+            Gizmos.DrawWireSphere(transform.position + new Vector3 (0f, 1f, 0f), attackRange);
             Gizmos.color = Color.yellow;
-            Gizmos.DrawWireSphere(transform.position, sightRange);
+            Gizmos.DrawWireSphere(transform.position + new Vector3(0f, 1f, 0f), sightRange);
         }
-        private void OnTriggerEnter(Collider coll)
-        {
-            coll.gameObject.GetComponent<PlayerHealth>().TakeDamage(damageAmount);
-        }
+        
     }
 }

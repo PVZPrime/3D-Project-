@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 982a441fff52ed247af59450165a6444, type: 3}
   m_Name: New Loot
   m_EditorClassIdentifier: 
-  LootObject: {fileID: 6012480659838254739, guid: 195bf0e21c9b0ec43a613e2096e0bab4,
+  LootObject: {fileID: 6397150142526277380, guid: 94571a78b96cacb44a9d617aa986c5a7,
     type: 3}
   LootName: loot
-  DropChance: 50
+  DropChance: 20

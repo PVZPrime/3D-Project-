@@ -9,14 +9,12 @@ public class ObjectPooling : MonoBehaviour
     public List<GameObject> pooledObjects;
     public GameObject objectToPool;
     public int amountToPool;
-    public Transform parentTransform;
 
     private int lastUsedIndex = -1;
 
     void Awake()
     {
         SharedInstance = this;
-        parentTransform = transform;
     }
 
     void Start()
@@ -25,7 +23,7 @@ public class ObjectPooling : MonoBehaviour
         GameObject tmp;
         for (int i = 0; i < amountToPool; i++)
         {
-            tmp = Instantiate(objectToPool, parentTransform != null ? parentTransform : this.transform);
+            tmp = Instantiate(objectToPool);
             tmp.GetComponent<MeshRenderer>().enabled = false;
             tmp.GetComponent<SphereCollider>().enabled = false;
             //tmp.SetActive(false);

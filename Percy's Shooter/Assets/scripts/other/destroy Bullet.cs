@@ -1,3 +1,4 @@
+using Enemy;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,9 +11,16 @@ namespace player
         public float timeToDestroy = 5f;
         public float Timer;
         public bool Active;
+        public int damage = 2;
+        public bool onPlayer, onEnemy;
         void Update()
         {
-            if (Active) Timer += Time.deltaTime;
+            if (Active)
+            {
+                Timer += Time.deltaTime;
+                gameObject.GetComponent<MeshRenderer>().enabled = true;
+                gameObject.GetComponent<SphereCollider>().enabled = true;
+            }
             if (Timer <= timeToDestroy && gameObject.GetComponent<MeshRenderer>().enabled == true) Active = true;
             //add a if statment to activate the compenents if active
             if (Timer >= timeToDestroy)
@@ -29,7 +37,15 @@ namespace player
         }
         private void OnTriggerEnter(Collider coll)
         {
-            if (coll != CompareTag("Bullet")) /*Destroy(gameObject);*/gameObject.SetActive(false);
+
+            if(coll.CompareTag("Enemy") && onPlayer)
+            {
+                coll.gameObject.GetComponent<EnemyHP>().TakeDamage(damage);
+            }
+            if (coll.CompareTag("Player") && onEnemy)
+            {
+                coll.gameObject.GetComponent<EnemyHP>().TakeDamage(damage);
+            }
         }
     }
 }
