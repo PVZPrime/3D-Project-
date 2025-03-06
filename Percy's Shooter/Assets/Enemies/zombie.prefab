@@ -8169,7 +8169,7 @@ Transform:
   m_GameObject: {fileID: 6476690752054311460}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0.45867303, z: -0, w: 0.8886052}
-  m_LocalPosition: {x: -0.40756226, y: -0.000000037252903, z: 0.21038055}
+  m_LocalPosition: {x: 13.64, y: -0.000000037252903, z: 10.19}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -8213,7 +8213,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 3.5
+  m_Speed: 7
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
@@ -8266,10 +8266,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a101d4d30a2ce841b0476f86d84255c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 1
+  health: 2
   ImunityTime: 0.25
-  experianceAmount: 0
   EnemyDead: 0
+  boss: 0
+  LoadLevel: 
 --- !u!54 &225303549048860660
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -9386,7 +9387,7 @@ GameObject:
   - component: {fileID: 1200226603537770110}
   m_Layer: 0
   m_Name: zombie
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

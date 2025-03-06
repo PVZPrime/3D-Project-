@@ -15,4 +15,4 @@ MonoBehaviour:
   LootObject: {fileID: 307425821173204247, guid: 94b0ef2b287648547baf3c3e8fb0ec02,
     type: 3}
   LootName: loot 2
-  DropChance: 10
+  DropChance: 25
