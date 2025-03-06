@@ -12,6 +12,7 @@ TagManager:
   - PickupItemHealth
   - right
   - left
+  - Interactable
   layers:
   - Default
   - TransparentFX

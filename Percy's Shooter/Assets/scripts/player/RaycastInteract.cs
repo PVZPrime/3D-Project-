@@ -81,19 +81,23 @@ namespace player
 
         public void PickupItemAmmo()
         {
-            if (hit.collider.gameObject.CompareTag("PickupItemAmmo") && _input.interact)
-            {
+            Ray ray = new(Camera.main.transform.position, Camera.main.transform.forward);
+            if (Physics.Raycast(ray, out hit, interactRange))
+                if (hit.collider.gameObject.CompareTag("PickupItemAmmo") && _input.interact)
+                {
                 PS.BulletsAvalible += AmmoAdded;
                 hit.collider.gameObject.SetActive(false);
-            }
+                }
         }
         public void PickupItemHealth()
         {
-            if (hit.collider.gameObject.CompareTag("PickupItemHealth") && _input.interact)
-            {
+            Ray ray = new(Camera.main.transform.position, Camera.main.transform.forward);
+            if (Physics.Raycast(ray, out hit, interactRange))
+                if (hit.collider.gameObject.CompareTag("PickupItemHealth") && _input.interact)
+                {
                 hit.collider.gameObject.SetActive(false);
                 PH.health += HealAmount;
-            }
+                }
         }
     }
 }

@@ -23,6 +23,9 @@ namespace Enemy
         NavMeshAgent NMA;
         EnemyAiMelee EAM;
         EnemyAi EA;
+        MeshRenderer MR;
+        SkinnedMeshRenderer[] SMR;
+        Rigidbody rb;
 
         void Start()
         {
@@ -31,11 +34,16 @@ namespace Enemy
             NMA = gameObject.GetComponent<NavMeshAgent>();
             EAM = gameObject.GetComponent<EnemyAiMelee>();
             EA = gameObject.GetComponent<EnemyAi>();
-            
+            MR = gameObject.GetComponent<MeshRenderer>();
+            SMR = gameObject.GetComponentsInChildren<SkinnedMeshRenderer>();
+            rb = gameObject.GetComponent<Rigidbody>();
+
+
             //player = GameObject.FindGameObjectWithTag("Player");
             //MaxHealth = health;
             //healthbar = GetComponentsInChildren<Image>()[1];
             //healthbar.fillAmount = health / MaxHealth;
+
         }
 
         void Update()
@@ -43,19 +51,38 @@ namespace Enemy
             time += Time.deltaTime;
             if (EnemyDead)
             {
+                if (MR != null) MR.enabled = false;
                 CC.enabled = false;
                 if (SC != null) SC.enabled = false;
                 NMA.enabled = false;
                 if (EAM != null) EAM.enabled = false;
                 if (EA != null) EA.enabled = false;
+                if(rb != null) rb.useGravity = false;
             }
             else
             {
+                if (MR != null) MR.enabled = true;
                 CC.enabled = true;
                 if(SC != null) SC.enabled = true;
                 NMA.enabled = true;
-                if (EAM != null) EAM.enabled = false;
-                if (EA != null) EA.enabled = false;
+                if (EAM != null) EAM.enabled = true;
+                if (EA != null) EA.enabled = true;
+                if (rb != null) rb.useGravity = true;
+            }
+            if (SMR != null)
+            {
+                SkinnedMeshRenderer[] meshRenderers = SMR;
+                foreach (SkinnedMeshRenderer thisMeshRenderer in meshRenderers)
+                {
+                    if (EnemyDead)
+                    {
+                        thisMeshRenderer.enabled = false;
+                    }
+                    else
+                    {
+                        thisMeshRenderer.enabled = true;
+                    }
+                }
             }
         }
         public void TakeDamage(int damage)
@@ -74,6 +101,8 @@ namespace Enemy
                     NMA.enabled = false;
                     if(EAM != null)EAM.enabled = false;
                     if (EA != null) EA.enabled = false;
+                    if (MR != null) MR.enabled = false;
+                    if (rb != null) rb.useGravity = false;
                     EnemyDead = true;
                 }
                 time = 0;
