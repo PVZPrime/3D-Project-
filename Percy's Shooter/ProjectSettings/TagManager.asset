@@ -16,6 +16,10 @@ TagManager:
   - Scene Start Point
   - menu
   - Player2
+  - end
+  - end2
+  - end3
+  - end4
   layers:
   - Default
   - TransparentFX

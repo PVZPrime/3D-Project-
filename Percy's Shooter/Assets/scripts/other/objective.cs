@@ -44,4 +44,13 @@ public class Objective : MonoBehaviour
                 ObjectiveText.SetText(Level3BossObjective);
         }
     }
+    private void OnTriggerEnter(Collider coll)
+    {
+        if (coll.CompareTag("end"))
+            SceneManager.LoadScene(Level2);
+        if (coll.CompareTag("end2"))
+            SceneManager.LoadScene(Level3);
+        if (coll.CompareTag("end3"))
+            SceneManager.LoadScene(Level3Boss);
+    }
 }
