@@ -29,6 +29,11 @@ namespace player
                 gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
                 Active = false;
 
+                if(onEnemy)
+                {
+                    Destroy(this.gameObject);
+                }
+                else
                 gameObject.GetComponent<MeshRenderer>().enabled = false;
                 gameObject.GetComponent<SphereCollider>().enabled = false;
                 //gameObject.SetActive(false);

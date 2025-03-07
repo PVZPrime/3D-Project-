@@ -147,9 +147,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9bd156832cd47054ca94f8c66b4d3be9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeToDestroy: 10
+  timeToDestroy: 3
   Timer: 0
-  Active: 0
+  Active: 1
   damage: 2
   onPlayer: 0
   onEnemy: 1
