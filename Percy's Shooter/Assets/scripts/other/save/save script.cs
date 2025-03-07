@@ -13,6 +13,8 @@ public class SaveScript : MonoBehaviour
     PlayerShoot PS;
     PlayerHealth PH;
     ability2 A2;
+    bool reload;
+    float ti;
     void Start()
     {
         //CC = GetComponent<CharacterController>();
@@ -43,6 +45,19 @@ public class SaveScript : MonoBehaviour
         System.IO.File.WriteAllText(file, myDataString);
         //Debug.Log(file);
     }
+    private void Update()
+    {
+        if (reload)
+        {
+            ti += Time.deltaTime;
+            if(ti>.5f)
+            {
+            Load();
+            reload = false;
+
+            }
+        }
+    }
     public void Load()
     {
         string file = Application.persistentDataPath + "/" + gameObject.name + ".json";
@@ -51,18 +66,38 @@ public class SaveScript : MonoBehaviour
             string jsonData = File.ReadAllText(file);
             jsonData = EncryptDecryptData(jsonData);
             PlayerSaveData myData = JsonUtility.FromJson<PlayerSaveData>(jsonData);
-            //CC.enabled = false;
-            transform.position = new Vector3(myData.x, myData.y, myData.z);
-            //CC.enabled = true;
-            PH.health = myData.health;
-            PS.saveCoolDown = myData.Ab1Timer;
-            PS.BulletsLeft = myData.Ammo;
-            A2.time = myData.Ab2Timer;
-            A2.Length = myData.Ab2TimeLeft;
-            PS.SaveCoolDownActive = myData.Ab1TimerActive;
-            PS.Reloading = myData.PSReload;
-            SceneManager.LoadScene(myData.SceneName);
+            if(SceneManager.GetActiveScene().name != myData.SceneName)
+            {
+                SceneManager.LoadScene(myData.SceneName);
+                //CC.enabled = false;
+                transform.position = new Vector3(myData.x, myData.y, myData.z);
+                //CC.enabled = true;
+                PH.health = myData.health;
+                PS.saveCoolDown = myData.Ab1Timer;
+                PS.BulletsLeft = myData.Ammo;
+                A2.time = myData.Ab2Timer;
+                A2.Length = myData.Ab2TimeLeft;
+                PS.SaveCoolDownActive = myData.Ab1TimerActive;
+                PS.Reloading = myData.PSReload;
+                reload = true;
+            }
+            else 
+            { 
+                //CC.enabled = false;
+                transform.position = new Vector3(myData.x, myData.y, myData.z);
+                //CC.enabled = true;
+                PH.health = myData.health;
+                PS.saveCoolDown = myData.Ab1Timer;
+                PS.BulletsLeft = myData.Ammo;
+                A2.time = myData.Ab2Timer;
+                A2.Length = myData.Ab2TimeLeft;
+                PS.SaveCoolDownActive = myData.Ab1TimerActive;
+                PS.Reloading = myData.PSReload;
 
+            
+            
+            }
+            Time.timeScale = 1;
             //string myData = File.ReadAllText(file);
             //myData = EncryptDecryptData(myData);
             ////Debug.Log(myData);

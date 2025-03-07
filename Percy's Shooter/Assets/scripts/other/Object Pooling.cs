@@ -11,7 +11,7 @@ public class ObjectPooling : MonoBehaviour
     public int amountToPool;
     public Transform parentTransform;
 
-    private int lastUsedIndex = -1;
+    int lastUsedIndex = -1;
 
     void Awake()
     {

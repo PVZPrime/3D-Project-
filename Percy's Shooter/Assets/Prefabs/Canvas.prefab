@@ -121,7 +121,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5c5b0e893c437240bc8e239a3749d5b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MainMenu: 
+  MainMenu: Start Menu
 --- !u!114 &8731042610282503730
 MonoBehaviour:
   m_ObjectHideFlags: 0

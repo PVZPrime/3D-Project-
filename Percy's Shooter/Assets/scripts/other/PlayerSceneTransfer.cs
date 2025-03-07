@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
@@ -12,19 +13,17 @@ public class PlayerSceneTransfer : MonoBehaviour
     public GameObject player2;
 
     public bool OriginalPlayer = false;
-    public int count;
+    int count;
     float time;
+    bool level1;
 
     // Start is called before the first frame update
     void Start()
     {
+        level1 = true;
         player = GameObject.FindGameObjectWithTag("Player");
         menu = GameObject.FindGameObjectWithTag("menu");
         SpawnPos = GameObject.FindGameObjectWithTag("Scene Start Point");
-        if (OriginalPlayer == false)
-        {
-            OriginalPlayer = true;
-        }
         if (menu != null)
         {
             player.SetActive(false);
@@ -48,7 +47,28 @@ public class PlayerSceneTransfer : MonoBehaviour
     }
     private void Update()
     {
+        if(level1)
         time += Time.deltaTime;
+        if (time > .25f)
+        {
+            if (OriginalPlayer == false && player != null && GameObject.FindGameObjectsWithTag("Player").Count() <= 1)
+            {
+                OriginalPlayer = true;
+                time = 0;
+                level1 = false;
+            }
+            else if (OriginalPlayer == false && player != null)
+            {
+                Destroy(gameObject);
+                time = 0;
+                level1 = false;
+            }
+            else
+            {
+                time = 0;
+                level1 = false;
+            }
+        }
 
         if(count == 1)
         {
@@ -60,9 +80,13 @@ public class PlayerSceneTransfer : MonoBehaviour
     }
     private void OnLevelWasLoaded(int level)
     {
-
+        level1 = true;
         menu = GameObject.FindGameObjectWithTag("menu");
 
+        if (OriginalPlayer == false)
+        {
+            Destroy(gameObject);
+        }
         if (menu != null)
         {
             player.SetActive(false);
@@ -72,10 +96,6 @@ public class PlayerSceneTransfer : MonoBehaviour
         {
             player.SetActive(true);
             GetComponentInChildren<Canvas>().enabled = true;
-        }
-        if (OriginalPlayer == false)
-        {
-            Destroy(gameObject);
         }
         SpawnPos = GameObject.FindGameObjectWithTag("Scene Start Point");
         count = 1;

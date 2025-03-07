@@ -38,13 +38,13 @@ public class EnemySave : MonoBehaviour
         string myDataString = JsonUtility.ToJson(myData);
         myDataString = EncryptDecryptData(myDataString);
         //Debug.Log(myDataString);
-        string file = Application.persistentDataPath + "/" + gameObject.name + ".json";
+        string file = Application.persistentDataPath + "/" + gameObject.GetInstanceID() + ".json";
         System.IO.File.WriteAllText(file, myDataString);
         //Debug.Log(file);
     }
     public void Load()
     {
-        string file = Application.persistentDataPath + "/" + gameObject.name + ".json";
+        string file = Application.persistentDataPath + "/" + gameObject.GetInstanceID() + ".json";
         if (File.Exists(file))
         {
             string jsonData = File.ReadAllText(file);

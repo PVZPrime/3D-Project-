@@ -19,19 +19,10 @@ namespace NewMovment
         private StarterAssetsInputs _input;
         public GameObject menu;
 
-        private void Start()
+        private void Awake()
         {
             menu = GameObject.FindGameObjectWithTag("menu");
             _input = GameObject.FindGameObjectWithTag("Player").GetComponent<StarterAssetsInputs>();
-            if (menu == null)
-            {
-                Cursor.lockState = CursorLockMode.Locked;
-                Cursor.visible = false;
-            }
-            else
-            {
-                Cursor.visible = true;
-            }
         }
         private void Update()
         {
