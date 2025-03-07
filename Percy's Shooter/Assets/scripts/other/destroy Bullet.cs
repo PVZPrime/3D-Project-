@@ -49,7 +49,7 @@ namespace player
             }
             if (coll.CompareTag("Player") && onEnemy)
             {
-                coll.gameObject.GetComponent<EnemyHP>().TakeDamage(damage);
+                coll.gameObject.GetComponent<PlayerHealth>().TakeDamage(damage);
             }
         }
     }

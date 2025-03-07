@@ -67,10 +67,20 @@ namespace player
                     TakeDamage(damageTaken);
                 firstAttack = false;
             }
+            if (coll.gameObject.CompareTag("Bullet"))
+            {
+                TakeDamage(damageTaken);
+                firstAttack = false;
+            }
         }
         private void OnTriggerEnter(Collider coll)
         {
             if (coll.gameObject.CompareTag("Enemy"))
+            {
+                TakeDamage(damageTaken);
+                firstAttack = false;
+            }
+            if (coll.gameObject.CompareTag("Bullet"))
             {
                 TakeDamage(damageTaken);
                 firstAttack = false;
