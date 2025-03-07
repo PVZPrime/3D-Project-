@@ -17,7 +17,6 @@ namespace player
             //{
             //    Bullet.Add(go);
             //}
-            GameObject.FindGameObjectWithTag("Player").GetComponent<SaveScript>().Save();
             foreach (GameObject go in GameObject.FindGameObjectsWithTag("Enemy"))
             {
                 Enemy.Add(go);

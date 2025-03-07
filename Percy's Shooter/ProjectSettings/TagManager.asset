@@ -20,6 +20,7 @@ TagManager:
   - end2
   - end3
   - end4
+  - Player3
   layers:
   - Default
   - TransparentFX

@@ -52,5 +52,6 @@ public class Objective : MonoBehaviour
             SceneManager.LoadScene(Level3);
         if (coll.CompareTag("end3"))
             SceneManager.LoadScene(Level3Boss);
+        
     }
 }

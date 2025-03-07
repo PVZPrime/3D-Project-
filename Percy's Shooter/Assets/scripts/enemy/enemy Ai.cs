@@ -25,8 +25,12 @@ namespace Enemy
         public GameObject Bullet;
         private void Awake()
         {
-            Player = GameObject.FindGameObjectWithTag("Player").transform;
+            
             agent = GetComponent<NavMeshAgent>();
+        }
+        private void Start()
+        {
+            Player = GameObject.FindGameObjectWithTag("Player").transform;
         }
 
         private void Update()

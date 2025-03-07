@@ -6,6 +6,21 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/SampleScene.unity
-    guid: 99c9720ab356a0642a771bea13969a05
+    path: Assets/Scenes/Levels/Start Menu.unity
+    guid: b828a4cd163d39644afdb863b4390082
+  - enabled: 1
+    path: Assets/Scenes/Levels/Streets Of London.unity
+    guid: 5c0cea90fef5a8647936df6412b4bc92
+  - enabled: 1
+    path: Assets/Scenes/Levels/Sewers Of London.unity
+    guid: be784ba12a77a944fb46fc7ed9a109b8
+  - enabled: 1
+    path: Assets/Scenes/Levels/BigBenLevel.unity
+    guid: 67df7f0adb9625d44b24ac65ba766162
+  - enabled: 1
+    path: Assets/Scenes/Levels/BigBenBoss.unity
+    guid: 01e77d86d1880ca45a6bb8161dcde6ff
+  - enabled: 1
+    path: Assets/Scenes/Levels/Win.unity
+    guid: d953eafe91bfefa46901acb7b9183fda
   m_configObjects: {}

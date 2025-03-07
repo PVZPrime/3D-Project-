@@ -46,14 +46,30 @@ namespace NewMovment
             transform.rotation = Quaternion.Euler(xRotation, yRotation, 0);
             orientatiion.rotation = Quaternion.Euler(0, yRotation, 0);
         }
-        public void DoFov(float endValue)
+        private void OnLevelWasLoaded(int level)
         {
-
+            menu = GameObject.FindGameObjectWithTag("menu");
+            if (menu == null)
+            {
+                Cursor.lockState = CursorLockMode.Locked;
+                Cursor.visible = false;
+            }
+            else
+            {
+                Cursor.visible = true;
+            }
         }
-
-        public void DoTile(float zTilt)
+        private void OnApplicationFocus(bool focus)
         {
-
+            if (menu == null)
+            {
+                Cursor.lockState = CursorLockMode.Locked;
+                Cursor.visible = false;
+            }
+            else
+            {
+                Cursor.visible = true;
+            }   
         }
     }
 }

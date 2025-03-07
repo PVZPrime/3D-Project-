@@ -26,13 +26,17 @@ namespace Enemy
         public int damageAmount;
         public float sightRange, attackRange;
         public bool playerInSightRange, playerInAttackRange, lookAtPlayer;
+        private void Start()
+        {
+            Player = GameObject.FindGameObjectWithTag("Player").transform;
+        }
         private void Awake()
         {
             anim = GetComponent<Animator>();
-            Player = GameObject.FindGameObjectWithTag("Player").transform;
             agent = GetComponent<NavMeshAgent>();
             anim.SetBool("walk", true);
         }
+
 
         private void Update()
         {
