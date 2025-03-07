@@ -154,7 +154,7 @@ Transform:
   m_GameObject: {fileID: 591739701862584057}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -32.390022, y: -6.7051983, z: -6.881241}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -759,7 +759,6 @@ GameObject:
   - component: {fileID: 9192236265052211613}
   - component: {fileID: 6460059753194063726}
   - component: {fileID: 1448638795098443824}
-  - component: {fileID: 8758176185102297086}
   - component: {fileID: 2981061317025148594}
   - component: {fileID: 1517448367190338312}
   - component: {fileID: 6105469385865022613}
@@ -781,7 +780,7 @@ Transform:
   m_GameObject: {fileID: 2862257457319565718}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -2.9418716, y: 1.4717143, z: -2.5349503}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -854,14 +853,14 @@ MonoBehaviour:
   WhatIsGround:
     serializedVersion: 2
     m_Bits: 128
-  WallRunForce: 200
-  WallJumpUpForce: 7
-  WallJumpSideForce: 12
-  climbSpeed: 3
-  maxWallRunTime: 1.5
+  WallRunForce: 1000
+  WallJumpUpForce: 10
+  WallJumpSideForce: 10
+  climbSpeed: 2
+  maxWallRunTime: 2
   WallCheckDistance: 0.7
   minJumpHeight: 2
-  exitWallTime: 0.2
+  exitWallTime: 3
   useGravity: 1
   gravityCounterForce: 14
   orientation: {fileID: 7949215358680048039}
@@ -877,18 +876,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63588950335c42d49a3bf5fe9acdadbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  walkSpeed: 7
-  sprintSpeed: 10
+  walkSpeed: 15
+  sprintSpeed: 15
   wallRunSpeed: 8.5
   slideSpeed: 30
-  climbSpeed: 4
+  climbSpeed: 1
   MaxSpeedDifference: 4
   speedIncreaseMultiplier: 1.5
   slopeIncreaseMultiplier: 2.5
   GroundDrag: 4
-  jumpForce: 12
+  jumpForce: 18
   jumpCooldown: 0.25
-  airMultiplier: 0.4
+  airMultiplier: 1
   crouchSpeed: 3.5
   crouchYScale: 0.5
   playerHeight: 2
@@ -930,7 +929,7 @@ MonoBehaviour:
   Ability1: 0
   Ability2: 0
   analogMovement: 0
-  cursorLocked: 1
+  cursorLocked: 0
   cursorInputForLook: 1
 --- !u!114 &2244717285425350920
 MonoBehaviour:
@@ -1088,7 +1087,7 @@ MonoBehaviour:
   TimeBetweenShots: 0
   MagSize: 160
   BulletsPerTap: 10
-  BulletsAvalible: 150
+  BulletsAvalible: 320
   AutoReload: 1
   TimeBetweenAbilities: 25
   saveCoolDown: 0
@@ -1114,7 +1113,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eadd8be361eef974b8affaaf8362c9db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 100
+  health: 10
   firstAttack: 0
   time: 0
   timer: 0
@@ -1123,19 +1122,6 @@ MonoBehaviour:
   RegenAmount: 1
   RegenDelay: 10
   damageTaken: 2
---- !u!114 &8758176185102297086
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2862257457319565718}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b800168d76bb0d541a3b72f56d36c632, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Enemy: []
 --- !u!114 &2981061317025148594
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1191,6 +1177,7 @@ MonoBehaviour:
   objectToPool: {fileID: 6203379121662253678, guid: b17b394757b34cb4ebc272847b8dd469,
     type: 3}
   amountToPool: 80
+  parentTransform: {fileID: 3168001220373768534}
 --- !u!114 &475599984690571354
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1227,8 +1214,8 @@ MonoBehaviour:
   Level3Boss: BigBenBoss
   Level1Objective: Get to the Sewers
   Level2Objective: Get out to Big Ben
-  Level3Objective: Confront the orb
-  Level3BossObjective: Kill the orb
+  Level3Objective: Touch Peters Light
+  Level3BossObjective: Kill Peter
 --- !u!1 &3496399391582964452
 GameObject:
   m_ObjectHideFlags: 0
@@ -2520,7 +2507,7 @@ MonoBehaviour:
     m_Bits: 1
   m_VolumeTrigger: {fileID: 0}
   m_VolumeFrameworkUpdateModeOption: 2
-  m_RenderPostProcessing: 0
+  m_RenderPostProcessing: 1
   m_Antialiasing: 0
   m_AntialiasingQuality: 2
   m_StopNaN: 0
@@ -2558,6 +2545,7 @@ MonoBehaviour:
   MaxXRotationUp: 90
   MaxXRotationDown: -90
   orientatiion: {fileID: 7949215358680048039}
+  menu: {fileID: 0}
 --- !u!1 &6868151467483471961
 GameObject:
   m_ObjectHideFlags: 0
@@ -2992,7 +2980,7 @@ GameObject:
   - component: {fileID: 9142189764821769494}
   m_Layer: 3
   m_Name: Capsule
-  m_TagString: Untagged
+  m_TagString: Player3
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3132,6 +3120,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14fe6478a34a04d43bc25ee65cb96350, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  SpawnPos: {fileID: 0}
+  menu: {fileID: 0}
+  player: {fileID: 0}
+  player2: {fileID: 7960904335003382483}
   OriginalPlayer: 0
 --- !u!1 &8086755316304365515
 GameObject:

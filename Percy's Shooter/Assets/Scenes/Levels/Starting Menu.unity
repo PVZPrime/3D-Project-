@@ -768,6 +768,11 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6460059753194063726, guid: 9d79eb57d38870e4e98751f215bf0fc3,
+        type: 3}
+      propertyPath: BulletsAvalible
+      value: 320
+      objectReference: {fileID: 0}
     - target: {fileID: 7028937130314567106, guid: 9d79eb57d38870e4e98751f215bf0fc3,
         type: 3}
       propertyPath: m_Enabled
@@ -796,12 +801,12 @@ PrefabInstance:
     - target: {fileID: 7028937130314567106, guid: 9d79eb57d38870e4e98751f215bf0fc3,
         type: 3}
       propertyPath: WallJumpUpForce
-      value: 2
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 7028937130314567106, guid: 9d79eb57d38870e4e98751f215bf0fc3,
         type: 3}
       propertyPath: WallJumpSideForce
-      value: 2
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 7425340304885494835, guid: 9d79eb57d38870e4e98751f215bf0fc3,
         type: 3}
